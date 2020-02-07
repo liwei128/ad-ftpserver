@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sf.ftp.web.dao.FtpUserEntityMapper">
+  <resultMap id="BaseResultMap" type="com.sf.ftp.web.beans.po.FtpUserEntity">
+    <id column="userid" jdbcType="VARCHAR" property="userid" />
+    <result column="homedirectory" jdbcType="VARCHAR" property="homedirectory" />
+    <result column="enableflag" jdbcType="BIT" property="enableflag" />
+    <result column="idletime" jdbcType="INTEGER" property="idletime" />
+    <result column="writepermission" jdbcType="BIT" property="writepermission" />
+    <result column="adminpermission" jdbcType="BIT" property="adminpermission" />
+    <result column="maxloginnumber" jdbcType="INTEGER" property="maxloginnumber" />
+    <result column="maxloginperip" jdbcType="INTEGER" property="maxloginperip" />
+    <result column="downloadrate" jdbcType="INTEGER" property="downloadrate" />
+    <result column="uploadrate" jdbcType="INTEGER" property="uploadrate" />
+    <result column="current_login_number" jdbcType="INTEGER" property="currentLoginNumber" />
+    <result column="expires" jdbcType="VARCHAR" property="expires" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    userid, homedirectory, enableflag, idletime, writepermission, adminpermission, maxloginnumber, 
+    maxloginperip, downloadrate, uploadrate, current_login_number, expires
+  </sql>
+  
+   <sql id="base_condition">
+      <if test="userid != null and userid!=''">
+        and userid = #{userid,jdbcType=VARCHAR}
+      </if>
+      <if test="enableflag != null ">
+        and enableflag = #{enableflag,jdbcType=BIT}
+      </if>
+      <if test="adminpermission != null ">
+        and adminpermission = #{adminpermission,jdbcType=BIT}
+      </if>
+      <if test="onLine != null and onLine">
+        and current_login_number &gt; 0 
+      </if>
+      <if test="onLine != null and !onLine">
+        and current_login_number = 0 
+      </if>
+  </sql>
+  
+  <select id="queryCountByCondition" parameterType="com.sf.ftp.web.beans.dto.UserCondition" resultType="java.lang.Integer">
+    select count(*) 
+    from ftp_user
+    where 1=1  
+      <include refid="base_condition" />
+  </select>
+  
+  <select id="queryByCondition" parameterType="com.sf.ftp.web.beans.dto.UserCondition" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ftp_user
+    where 1=1  
+      <include refid="base_condition" />
+    limit #{offset},#{limit}
+  </select>
+  
+  <select id="selectByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ftp_user
+    where userid = #{userid,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByUserId" parameterType="java.lang.String">
+    delete from ftp_user
+    where userid = #{userid,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.sf.ftp.web.beans.po.FtpUserEntity">
+    insert into ftp_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="homedirectory != null">
+        homedirectory,
+      </if>
+      <if test="enableflag != null">
+        enableflag,
+      </if>
+      <if test="idletime != null">
+        idletime,
+      </if>
+      <if test="writepermission != null">
+        writepermission,
+      </if>
+      <if test="adminpermission != null">
+        adminpermission,
+      </if>
+      <if test="maxloginnumber != null">
+        maxloginnumber,
+      </if>
+      <if test="maxloginperip != null">
+        maxloginperip,
+      </if>
+      <if test="downloadrate != null">
+        downloadrate,
+      </if>
+      <if test="uploadrate != null">
+        uploadrate,
+      </if>
+      <if test="expires != null">
+        expires,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="homedirectory != null">
+        #{homedirectory,jdbcType=VARCHAR},
+      </if>
+      <if test="enableflag != null">
+        #{enableflag,jdbcType=BIT},
+      </if>
+      <if test="idletime != null">
+        #{idletime,jdbcType=INTEGER},
+      </if>
+      <if test="writepermission != null">
+        #{writepermission,jdbcType=BIT},
+      </if>
+      <if test="adminpermission != null">
+        #{adminpermission,jdbcType=BIT},
+      </if>
+      <if test="maxloginnumber != null">
+        #{maxloginnumber,jdbcType=INTEGER},
+      </if>
+      <if test="maxloginperip != null">
+        #{maxloginperip,jdbcType=INTEGER},
+      </if>
+      <if test="downloadrate != null">
+        #{downloadrate,jdbcType=INTEGER},
+      </if>
+      <if test="uploadrate != null">
+        #{uploadrate,jdbcType=INTEGER},
+      </if>
+      <if test="expires != null">
+        #{expires,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByUserId" parameterType="com.sf.ftp.web.beans.po.FtpUserEntity">
+    update ftp_user
+    <set>
+      <if test="homedirectory != null">
+        homedirectory = #{homedirectory,jdbcType=VARCHAR},
+      </if>
+      <if test="enableflag != null">
+        enableflag = #{enableflag,jdbcType=BIT},
+      </if>
+      <if test="idletime != null">
+        idletime = #{idletime,jdbcType=INTEGER},
+      </if>
+      <if test="writepermission != null">
+        writepermission = #{writepermission,jdbcType=BIT},
+      </if>
+      <if test="adminpermission != null">
+        adminpermission = #{adminpermission,jdbcType=BIT},
+      </if>
+      <if test="maxloginnumber != null">
+        maxloginnumber = #{maxloginnumber,jdbcType=INTEGER},
+      </if>
+      <if test="maxloginperip != null">
+        maxloginperip = #{maxloginperip,jdbcType=INTEGER},
+      </if>
+      <if test="downloadrate != null">
+        downloadrate = #{downloadrate,jdbcType=INTEGER},
+      </if>
+      <if test="uploadrate != null">
+        uploadrate = #{uploadrate,jdbcType=INTEGER},
+      </if>
+      <if test="expires != null">
+        expires = #{expires,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where userid = #{userid,jdbcType=VARCHAR}
+  </update>
+</mapper>

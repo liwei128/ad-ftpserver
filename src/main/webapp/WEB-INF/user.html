@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"> 
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="renderer" content="webkit">
+		<title>FTP服务后台管理</title>
+
+		<!-- 全局css -->
+		<link rel="shortcut icon" href="/static/favicon.ico">
+		<link href="/static/plugin/bootstrap.min.css" rel="stylesheet">
+		<link href="/static/plugin/font-awesome.css" rel="stylesheet">
+		<link href="/static/plugin/bootstrap-table.min.css" rel="stylesheet">
+		<link href="/static/plugin/style.css" rel="stylesheet">
+		
+		<!-- 全局js -->
+		<script src="/static/plugin/jquery.min.js"></script>
+		<script src="/static/plugin/bootstrap.min.js"></script>
+		<script src="/static/plugin/bootstrap-table.min.js"></script>
+		<script src="/static/plugin/bootstrap-table-zh-CN.min.js"></script>
+		<script src="/static/plugin/layer.min.js"></script>
+		<script src="/static/plugin/ajax-object.js"></script>
+		<script src="/static/plugin/bootstrap-table-object.js"></script>
+		<script src="/static/plugin/Feng.js"></script>
+
+
+		<script type="text/javascript">
+			Feng.addCtx("");
+			Feng.sessionTimeoutRegistry();
+		</script>
+	</head>
+
+	<body class="gray-bg">
+		<div class="wrapper wrapper-content animated fadeInRight">
+			<div class="row" >
+				<div class="col-sm-12">
+					<div class="ibox float-e-margins">
+						<div class="ibox-title top-title">
+							<h5 class="active" onClick ="FtpManage.switcherView('user')">FTP用户管理</h5>
+							<h5 onClick ="FtpManage.switcherView('log')">文件访问记录</h5>
+							<h5 onClick ="FtpManage.switcherView('statistics')">系统信息</h5>
+							<div class="title-right">
+								<span th:text = "${user.userid}"></span>
+								<a href="javascript:void(0);" onclick="FtpManage.exit()" class="roll-nav roll-right J_tabExit">
+									<i class="fa fa fa-sign-out"></i> 退出
+								</a>
+							</div>
+						</div>
+						<div class="ibox-content">
+							<div class="row row-lg">
+								<div class="col-sm-12">
+									<div class="row">
+										<div class="col-sm-2">
+											<div class="input-group">
+												<div class="input-group-btn">
+													<button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">启用</button>
+												</div>
+												<select class="form-control" id="enableflag" onchange="FtpManage.onChangeStatus()">
+													<option></option>
+													<option value="true">是</option>
+													<option value="false">否</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-sm-2">
+											<div class="input-group">
+												<div class="input-group-btn">
+													<button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">管理员权限</button>
+												</div>
+												<select class="form-control" id="adminpermission" onchange="FtpManage.onChangeStatus()">
+													<option></option>
+													<option value="true">是</option>
+													<option value="false">否</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-sm-2">
+											<div class="input-group">
+												<div class="input-group-btn">
+													<button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">在线</button>
+												</div>
+												<select class="form-control" id="onLine" onchange="FtpManage.onChangeStatus()">
+													<option></option>
+													<option value="true">是</option>
+													<option value="false">否</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-sm-2">
+											<div class="input-group">
+												<div class="input-group-btn">
+													<button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">工号
+													</button>
+												</div>
+												<input type="text" class="form-control" id="userid" placeholder="">
+											</div>
+										</div>
+										<div class="col-sm-3">
+
+											<button type="button" class="btn btn-primary " onclick="FtpManage.search()" id="">
+												<i class="fa fa-search"></i>&nbsp;搜索
+											</button>
+											<button type="button" class="btn btn-primary " onclick="FtpManage.reset()" id="">
+												<i class="fa fa-trash"></i>&nbsp;重置
+											</button>
+
+										</div>
+									</div>
+
+									<div class="bootstrap-table">
+										<div class="fixed-table-toolbar">
+											<div class="bs-bars pull-left">
+												<div class="hidden-xs" id="FtpTableToolbar" role="group">
+
+													<button type="button" class="btn btn-primary " onclick="FtpManage.openAdd()" id="">
+														<i class="fa fa-plus"></i>&nbsp;添加
+													</button>
+
+
+													<button type="button" class="btn btn-primary button-margin" onclick="FtpManage.openDetail()"
+													 id="">
+														<i class="fa fa-edit"></i>&nbsp;修改
+													</button>
+
+
+													<button type="button" class="btn btn-primary button-margin" onclick="FtpManage.delete()" id="">
+														<i class="fa fa-remove"></i>&nbsp;删除
+													</button>
+												</div>
+											</div>
+											<table id="FtpManage"/>
+										</div>
+										
+									</div>
+									
+								</div>
+								
+							</div>
+							
+						</div>
+					
+
+
+					</div>
+			    </div>
+		    </div>
+	    </div>
+	</body>
+<script src="/static/user.js"></script>
+</html>

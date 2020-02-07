@@ -1,0 +1,189 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.sf.ftp</groupId>
+  <artifactId>ad-ftpserver</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>ad-ftpserver</name>
+  <description>ftp服务</description>
+  	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.1.10.RELEASE</version>
+		<relativePath/> 
+	</parent>
+  
+  
+  <!-- 区分环境打包  begin-->
+	<profiles>
+		<profile>
+			<id>local</id>
+			<build>
+				<resources>
+					<resource>
+		                <directory>src/main/webapp</directory>
+		            </resource>
+					<resource>
+						<directory>src/main/resources</directory>
+					</resource>
+				</resources>
+			</build>
+			<activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+		</profile>
+		<profile>
+			<id>sit</id>
+			<build>
+				<resources>
+					<resource>
+		                <directory>src/main/webapp</directory>
+		            </resource>
+					<resource>
+						<directory>src/main/resources.sit</directory>
+					</resource>
+					<resource>
+						<directory>src/main/resources</directory>
+					</resource>
+				</resources>
+			</build>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<build>
+				<resources>
+					<resource>
+		                <directory>src/main/webapp</directory>
+		            </resource>
+					<resource>
+						<directory>src/main/resources.prod</directory>
+					</resource>
+					<resource>
+						<directory>src/main/resources</directory>
+					</resource>
+				</resources>
+			</build>
+		</profile>
+	</profiles>
+	<!-- 区分环境打包  end-->
+	
+	<!-- java版本  begin-->
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+	</properties>
+	<!-- java版本  end-->
+	
+	
+	<dependencies>
+		<!-- springboot全家桶  begin -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>1.3.2</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-api</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency> 
+		     <groupId>org.springframework.boot</groupId> 
+		     <artifactId>spring-boot-starter-thymeleaf</artifactId>
+		     <exclusions>
+		     	<exclusion>
+		     		<groupId>org.slf4j</groupId>
+		     		<artifactId>slf4j-api</artifactId>
+		     	</exclusion>
+		     </exclusions>
+		</dependency>
+		<!-- springboot全家桶  begin -->
+
+		<!-- 常用工具  begin -->
+		<dependency>
+		    <groupId>org.slf4j</groupId>
+		    <artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-lang3</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>com.alibaba</groupId>
+		    <artifactId>fastjson</artifactId>
+		    <version>1.2.47</version>
+	    </dependency>
+		<dependency>
+		    <groupId>com.google.guava</groupId>
+		    <artifactId>guava</artifactId>
+		    <version>27.0.1-jre</version>
+		</dependency>
+		<!-- 常用工具  end -->
+		
+		<!-- ftp服务  begin -->
+		<dependency>
+		    <groupId>org.apache.ftpserver</groupId>
+		    <artifactId>ftpserver-core</artifactId>
+		    <version>1.1.1</version>
+		    <exclusions>
+		    	<exclusion>
+		    		<groupId>org.slf4j</groupId>
+		    		<artifactId>slf4j-api</artifactId>
+		    	</exclusion>
+		    </exclusions>
+		</dependency>
+		<!-- ftp服务   end -->
+		
+		<!-- 数据库  begin -->
+		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>hikari-cp</groupId>
+		    <artifactId>hikari-cp</artifactId>
+		    <version>2.6.0</version>
+		    <exclusions>
+		    	<exclusion>
+		    		<groupId>org.slf4j</groupId>
+		    		<artifactId>slf4j-api</artifactId>
+		    	</exclusion>
+		    </exclusions>
+		</dependency>
+		<!-- 数据库  end -->
+
+	</dependencies>
+	
+	
+	<!-- 项目打包构建  begin -->
+	<build>
+		<finalName>ftpserver</finalName> 
+		<plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+					<fork>true</fork>
+				</configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <!-- 项目打包构建  end -->
+	
+
+</project>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="renderer" content="webkit">
+<title>FTP服务后台管理</title>
+
+<!-- 全局css -->
+<link rel="shortcut icon" href="/static/favicon.ico">
+<link href="/static/plugin/bootstrap.min.css" rel="stylesheet">
+<link href="/static/plugin/font-awesome.css" rel="stylesheet">
+<link href="/static/plugin/bootstrap-table.min.css" rel="stylesheet">
+<link href="/static/plugin/style.css" rel="stylesheet">
+<!-- 全局js -->
+<script src="/static/plugin/jquery.min.js"></script>
+<script src="/static/plugin/bootstrap.min.js"></script>
+<script src="/static/plugin/bootstrap-table.min.js"></script>
+<script src="/static/plugin/bootstrap-table-zh-CN.min.js"></script>
+<script src="/static/plugin/layer.min.js"></script>
+<script src="/static/plugin/ajax-object.js"></script>
+<script src="/static/plugin/bootstrap-table-object.js"></script>
+<script src="/static/plugin/Feng.js"></script>
+
+<script type="text/javascript">
+			Feng.addCtx("");
+			Feng.sessionTimeoutRegistry();
+		</script>
+</head>
+
+<body class="gray-bg">
+	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-title top-title">
+						<h5 onClick="FtpStatistics.switcherView('user')">FTP用户管理</h5>
+						<h5 onClick="FtpStatistics.switcherView('log')">文件访问记录</h5>
+						<h5 class="active"
+							onClick="FtpStatistics.switcherView('statistics')">系统信息</h5>
+						<div class="title-right">
+							<span th:text="${user.userid}"></span> <a
+								href="javascript:void(0);" onclick="FtpStatistics.exit()"
+								class="roll-nav roll-right J_tabExit"> <i
+								class="fa fa fa-sign-out"></i> 退出
+							</a>
+						</div>
+					</div>
+					<div class="wrapper wrapper-content">
+						<div class="ibox-content">
+							<p>
+								服务启动时间:<b id="startTime"></b>
+							</p>
+							<p>文件共享平台(ftp)提供LDAP授权、审计、API接口等功能；本页面统计数据每5秒自动刷新;</p>
+							<p>
+								如果您有问题反馈或者有更好的创意，请联系我们：马云（000001）、马化腾（000002）；
+							</p>
+						</div>
+						<br />
+						<div class="row">
+							<div class="col-sm-3">
+								<div class="ibox float-e-margins">
+									<div class="ibox-title">
+										<span class="label label-danger pull-right">实时</span>
+										<h5>当前连接</h5>
+									</div>
+									<div class="ibox-content">
+										<h1 class="no-margins" id="currentConnectionNumber"></h1>
+										<small>当前</small>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="ibox float-e-margins">
+									<div class="ibox-title">
+										<span class="label label-danger pull-right">实时</span>
+										<h5>当前登录</h5>
+									</div>
+									<div class="ibox-content">
+										<h1 class="no-margins" id="currentLoginNumber"></h1>
+										<small>当前</small>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="ibox float-e-margins">
+									<div class="ibox-title">
+										<span class="label label-info pull-right">累计</span>
+										<h5>连接总数</h5>
+									</div>
+									<div class="ibox-content">
+										<h1 class="no-margins" id="totalConnectionNumber"></h1>
+										<small>总计</small>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="ibox float-e-margins">
+									<div class="ibox-title">
+										<span class="label label-info pull-right">累计</span>
+										<h5>登录总数</h5>
+									</div>
+									<div class="ibox-content">
+										<h1 class="no-margins" id="totalLoginNumber"></h1>
+										<small>总计</small>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-3">
+								<div class="ibox float-e-margins">
+									<div class="ibox-title">
+										<span class="label label-info pull-right">累计</span>
+										<h5>上传文件数量</h5>
+									</div>
+									<div class="ibox-content">
+										<h1 class="no-margins" id="totalUploadNumber"></h1>
+										<small>总计</small>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="ibox float-e-margins">
+									<div class="ibox-title">
+										<span class="label label-info pull-right">累计</span>
+										<h5>下载文件数量</h5>
+									</div>
+									<div class="ibox-content">
+										<h1 class="no-margins" id="totalDownloadNumber"></h1>
+										<small>总计</small>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="ibox float-e-margins">
+									<div class="ibox-title">
+										<span class="label label-info pull-right">累计</span>
+										<h5>上传文件大小(kb)</h5>
+									</div>
+									<div class="ibox-content">
+										<h1 class="no-margins" id="totalUploadSize"></h1>
+										<small>总计</small>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="ibox float-e-margins">
+									<div class="ibox-title">
+										<span class="label label-info pull-right">累计</span>
+										<h5>下载文件大小(kb)</h5>
+									</div>
+									<div class="ibox-content">
+										<h1 class="no-margins" id="totalDownloadSize"></h1>
+										<small>总计</small>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-3">
+								<div class="ibox float-e-margins">
+									<div class="ibox-title">
+										<span class="label label-info pull-right">累计</span>
+										<h5>创建目录</h5>
+									</div>
+									<div class="ibox-content">
+										<h1 class="no-margins" id="totalDirectoryCreated"></h1>
+										<small>总计</small>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="ibox float-e-margins">
+									<div class="ibox-title">
+										<span class="label label-info pull-right">累计</span>
+										<h5>删除目录</h5>
+									</div>
+									<div class="ibox-content">
+										<h1 class="no-margins" id="totalDirectoryRemoved"></h1>
+										<small>总计</small>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="ibox float-e-margins">
+									<div class="ibox-title">
+										<span class="label label-info pull-right">累计</span>
+										<h5>删除文件</h5>
+									</div>
+									<div class="ibox-content">
+										<h1 class="no-margins" id="totalDeleteNumber"></h1>
+										<small>总计</small>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="ibox float-e-margins">
+									<div class="ibox-title">
+										<span class="label label-info pull-right">累计</span>
+										<h5>登录失败</h5>
+									</div>
+									<div class="ibox-content">
+										<h1 class="no-margins" id="totalFailedLoginNumber"></h1>
+										<small>总计</small>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+					
+
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="/static/ftpStatistics.js"></script>
+</html>

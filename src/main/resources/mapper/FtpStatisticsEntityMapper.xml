@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sf.ftp.web.dao.FtpStatisticsEntityMapper">
+  <resultMap id="BaseResultMap" type="com.sf.ftp.web.beans.po.FtpStatisticsEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="startTime" jdbcType="VARCHAR" property="starttime" />
+    <result column="totalUploadNumber" jdbcType="VARCHAR" property="totaluploadnumber" />
+    <result column="totalDownloadNumber" jdbcType="VARCHAR" property="totaldownloadnumber" />
+    <result column="totalDeleteNumber" jdbcType="VARCHAR" property="totaldeletenumber" />
+    <result column="totalUploadSize" jdbcType="VARCHAR" property="totaluploadsize" />
+    <result column="totalDownloadSize" jdbcType="VARCHAR" property="totaldownloadsize" />
+    <result column="totalDirectoryCreated" jdbcType="VARCHAR" property="totaldirectorycreated" />
+    <result column="totalDirectoryRemoved" jdbcType="VARCHAR" property="totaldirectoryremoved" />
+    <result column="totalConnectionNumber" jdbcType="VARCHAR" property="totalconnectionnumber" />
+    <result column="currentConnectionNumber" jdbcType="VARCHAR" property="currentconnectionnumber" />
+    <result column="totalLoginNumber" jdbcType="VARCHAR" property="totalloginnumber" />
+    <result column="totalFailedLoginNumber" jdbcType="VARCHAR" property="totalfailedloginnumber" />
+    <result column="currentLoginNumber" jdbcType="VARCHAR" property="currentloginnumber" />
+    <result column="totalAnonymousLoginNumber" jdbcType="VARCHAR" property="totalanonymousloginnumber" />
+    <result column="currentAnonymousLoginNumber" jdbcType="VARCHAR" property="currentanonymousloginnumber" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, startTime, totalUploadNumber, totalDownloadNumber, totalDeleteNumber, totalUploadSize, 
+    totalDownloadSize, totalDirectoryCreated, totalDirectoryRemoved, totalConnectionNumber, 
+    currentConnectionNumber, totalLoginNumber, totalFailedLoginNumber, currentLoginNumber, 
+    totalAnonymousLoginNumber, currentAnonymousLoginNumber, updateTime
+  </sql>
+  <select id="query" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ftp_statistics
+    limit 1
+  </select>
+</mapper>

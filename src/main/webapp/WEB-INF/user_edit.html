@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="renderer" content="webkit">
+<title>用户详情</title>
+
+<!-- 全局css -->
+<link rel="shortcut icon" href="/static/favicon.ico">
+<link href="/static/plugin/bootstrap.min.css" rel="stylesheet">
+<link href="/static/plugin/font-awesome.css" rel="stylesheet">
+<link href="/static/plugin/bootstrap-table.min.css" rel="stylesheet">
+<link href="/static/plugin/style.css" rel="stylesheet">
+<!-- 全局js -->
+<script src="/static/plugin/jquery.min.js"></script>
+<script src="/static/plugin/bootstrap.min.js"></script>
+<script src="/static/plugin/bootstrap-table.min.js"></script>
+<script src="/static/plugin/bootstrap-table-zh-CN.min.js"></script>
+<script src="/static/plugin/layer.min.js"></script>
+<script src="/static/plugin/ajax-object.js"></script>
+<script src="/static/plugin/bootstrap-table-object.js"></script>
+<script src="/static/plugin/Feng.js"></script>
+
+
+<script type="text/javascript">
+	Feng.addCtx("");
+	Feng.sessionTimeoutRegistry();
+</script>
+</head>
+
+<body class="gray-bg">
+	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="ibox float-e-margins">
+			<div class="ibox-content">
+				<div class="form-horizontal">
+					<div class="row">
+						<div class="col-sm-6 b-r">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">账号</label>
+								<div class="col-sm-8">
+									<input readonly="readonly" class="form-control" id="userid"
+										name="userid" th:value="${item.userid}" type="text">
+
+								</div>
+							</div>
+							<div class="hr-line-dashed"></div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label">启用</label>
+								<div class="col-sm-8">
+									<select class="form-control" id="enableflag" name="enableflag"
+										th:if="${item.enableflag}">
+										<option selected value='true'>是</option>
+										<option value='false'>否</option>
+									</select> <select class="form-control" id="enableflag" name="enableflag"
+										th:if="${!item.enableflag}">
+										<option value='true'>是</option>
+										<option selected value='false'>否</option>
+									</select>
+								</div>
+							</div>
+							<div class="hr-line-dashed"></div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label">写权限</label>
+								<div class="col-sm-8">
+									<select class="form-control" id="writepermission"
+										name="writepermission" th:if="${item.writepermission}">
+										<option selected value='true'>是</option>
+										<option value='false'>否</option>
+									</select> <select class="form-control" id="writepermission"
+										name="writepermission" th:if="${!item.writepermission}">
+										<option value='true'>是</option>
+										<option selected value='false'>否</option>
+									</select>
+								</div>
+							</div>
+							<div class="hr-line-dashed"></div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label">最大的登录限制</label>
+								<div class="col-sm-8">
+									<input class="form-control" id="maxloginnumber"
+										name="maxloginnumber" th:value="${item.maxloginnumber}"
+										type="text">
+
+								</div>
+							</div>
+							<div class="hr-line-dashed"></div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label">下载速率(byte)</label>
+								<div class="col-sm-8">
+									<input class="form-control" id="downloadrate"
+										name="downloadrate" th:value="${item.downloadrate}"
+										type="text">
+
+								</div>
+							</div>
+							<div class="hr-line-dashed"></div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label">有效期</label>
+								<div class="col-sm-8">
+									<input class="form-control" id="expires" name="expires"
+										th:value="${item.expires}" type="text" placeholder = "yyyy-MM-dd">
+
+								</div>
+							</div>
+							<div class="hr-line-dashed"></div>
+						</div>
+
+						<div class="col-sm-6">
+							<div class="form-group">
+								<label class="col-sm-4 control-label">主目录</label>
+								<div class="col-sm-8">
+									<input class="form-control" id="homedirectory"
+										name="homedirectory" th:value="${item.homedirectory}"
+										type="text">
+
+								</div>
+							</div>
+							<div class="hr-line-dashed"></div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label">最大空闲时间(秒)</label>
+								<div class="col-sm-8">
+									<input class="form-control" id="idletime" name="idletime"
+										th:value="${item.idletime}" type="text">
+
+								</div>
+							</div>
+							<div class="hr-line-dashed"></div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label">管理员权限</label>
+								<div class="col-sm-8">
+									<select class="form-control" id="adminpermission"
+										name="adminpermission" th:if="${item.adminpermission}">
+										<option selected value='true'>是</option>
+										<option value='false'>否</option>
+									</select> <select class="form-control" id="adminpermission"
+										name="adminpermission" th:if="${!item.adminpermission}">
+										<option value='true'>是</option>
+										<option selected value='false'>否</option>
+									</select>
+								</div>
+							</div>
+							<div class="hr-line-dashed"></div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label">同ip最大登录限制</label>
+								<div class="col-sm-8">
+									<input class="form-control" id="maxloginperip"
+										name="maxloginperip" th:value="${item.maxloginperip}"
+										type="text">
+
+								</div>
+							</div>
+							<div class="hr-line-dashed"></div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label">上传速率(byte)</label>
+								<div class="col-sm-8">
+									<input class="form-control" id="uploadrate" name="uploadrate"
+										th:value="${item.uploadrate}" type="text">
+
+								</div>
+							</div>
+							<div class="hr-line-dashed"></div>
+
+						</div>
+					</div>
+
+					<div class="row btn-group-m-t">
+						<div class="col-sm-10">
+
+							<button type="button" class="btn btn-info "
+								onclick="FtpUserInfoDlg.editSubmit()" id="ensure">
+								<i class="fa fa-check"></i>&nbsp;提交
+							</button>
+
+
+							<button type="button" class="btn btn-danger "
+								onclick="FtpUserInfoDlg.close()" id="cancel">
+								<i class="fa fa-eraser"></i>&nbsp;取消
+							</button>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="/static/user_add_edit.js"></script>
+</html>

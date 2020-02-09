@@ -35,6 +35,6 @@
 
 > 2.4 启动部署
 * 同时启动ftp服务和web管理页面  java -jar ftpserver.jar
-* 只启动ftp服务  java -jar ftpserver.jar notWeb
-* 只启动web管理页面  java -jar ftpserver.jar notFtp
+* 只启动ftp服务  java -jar ftpserver.jar ftp
+* 只启动web管理页面  java -jar ftpserver.jar web
 * 特殊说明：建议ftp和web分开启动，便于后期进行web管理页面迭代发布时不影响ftp的使用

@@ -18,17 +18,17 @@ import com.sf.ftp.server.core.SfFtpServer;
 @MapperScan(basePackages = { "com.sf.ftp.web.dao" })
 public class FtpApplication {
 
-	private static final String NOT_FTP = "notFtp";
+	private static final String FTP = "ftp";
 
-	private static final String NOT_WEB = "notWeb";
+	private static final String WEB = "web";
 
 	public static void main(String[] args) throws Exception {
 
-		if (!ArrayUtils.contains(args, NOT_FTP)) {
+		if (ArrayUtils.contains(args, FTP)) {
 			// 启动ftp服务
 			SfFtpServer.run();
 		}
-		if (!ArrayUtils.contains(args, NOT_WEB)) {
+		if (ArrayUtils.contains(args, WEB)) {
 			// 启动web管理页面
 			SpringApplication.run(FtpApplication.class, args);
 		}

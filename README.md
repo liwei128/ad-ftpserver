@@ -34,7 +34,7 @@
 * 特殊说明：测试环境ad密码统一为123
 
 > 2.4 启动部署
-* 同时启动ftp服务和web管理页面  java -jar ftpserver.jar
+* 同时启动ftp服务和web管理页面  java -jar ftpserver.jar ftp web
 * 只启动ftp服务  java -jar ftpserver.jar ftp
 * 只启动web管理页面  java -jar ftpserver.jar web
 * 特殊说明：建议ftp和web分开启动，便于后期进行web管理页面迭代发布时不影响ftp的使用

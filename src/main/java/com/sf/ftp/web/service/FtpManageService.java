@@ -1,5 +1,7 @@
 package com.sf.ftp.web.service;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.sf.ftp.web.beans.common.PagingData;
 import com.sf.ftp.web.beans.common.ResultData;
 import com.sf.ftp.web.beans.dto.LogCondition;
@@ -78,5 +80,30 @@ public interface FtpManageService {
 	 * FtpUserEntity
 	 */
 	FtpUserEntity selectByUserId(String userid);
+
+	/**
+	 * 导入
+	 * @param file
+	 * @return
+	 * String
+	 */
+	String importExcel(MultipartFile file);
+
+	/**
+	 * 导出用户
+	 * @param condition
+	 * @throws Exception
+	 * void
+	 */
+	void exportUser(UserCondition condition) throws Exception ;
+	
+	
+	/**
+	 * 导出日志
+	 * @param condition
+	 * @throws Exception
+	 * void
+	 */
+	void exportLog(LogCondition condition) throws Exception ;
 
 }

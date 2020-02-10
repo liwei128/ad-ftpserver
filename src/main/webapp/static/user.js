@@ -92,6 +92,28 @@ FtpManage.openAdd = function () {
     this.layerIndex = index;
 };
 
+FtpManage.import = function () {
+	var url=Feng.ctxPath + '/user/importView';
+	parent.layer.open({
+	    type:2,
+	    shadeClose : true,
+	    shade : 0.3,
+	    title : '导入EXCEL',
+	    skin: 'layui-layer-rim', //加上边框
+	    area: ['300px', '240px'], //宽高
+	    content: url
+	});
+};
+
+FtpManage.export = function () {
+	var url = Feng.ctxPath+"/user/export?";
+	url+="userid="+$("#userid").val();
+	url+="&enableflag="+$("#enableflag").val();
+	url+="&onLine="+$("#onLine").val();
+	url+="&adminpermission="+$("#adminpermission").val();
+	window.location.href = Feng.ctxPath+url;
+}
+
 FtpManage.openDetail = function () {
     if (this.check()) {
         var index = layer.open({

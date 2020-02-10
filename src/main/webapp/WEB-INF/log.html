@@ -84,13 +84,23 @@
 											onclick="FtpLogManage.reset()" id="">
 											<i class="fa fa-trash"></i>&nbsp;重置
 										</button>
+										
 
 									</div>
 								</div>
 
 								<div class="bootstrap-table">
 									<div class="fixed-table-toolbar">
+										<div class="bs-bars pull-left">
+											<div class="hidden-xs" id="FtpTableToolbar" role="group">
 
+												<button type="button" class="btn btn-primary "
+													onclick="FtpLogManage.export()" id="">
+													<i class="fa fa-download"></i>&nbsp;导出
+												</button>
+
+											</div>
+										</div>
 										<table id="FtpLogTable" />
 									</div>
 

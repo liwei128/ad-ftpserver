@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"> 
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="renderer" content="webkit">
+		<title>FTP服务后台管理</title>
+
+		<!-- 全局css -->
+		<link rel="shortcut icon" href="/static/favicon.ico">
+		<link href="/static/plugin/bootstrap.min.css" rel="stylesheet">
+		<link href="/static/plugin/font-awesome.css" rel="stylesheet">
+		<link href="/static/plugin/bootstrap-table.min.css" rel="stylesheet">
+		<link href="/static/plugin/style.css" rel="stylesheet">
+		
+		<!-- 全局js -->
+		<script src="/static/plugin/jquery.min.js"></script>
+		<script src="/static/plugin/bootstrap.min.js"></script>
+		<script src="/static/plugin/bootstrap-table.min.js"></script>
+		<script src="/static/plugin/bootstrap-table-zh-CN.min.js"></script>
+		<script src="/static/plugin/layer.min.js"></script>
+		<script src="/static/plugin/ajax-object.js"></script>
+		<script src="/static/plugin/bootstrap-table-object.js"></script>
+		<script src="/static/plugin/Feng.js"></script>
+
+
+		<script type="text/javascript">
+			Feng.addCtx("");
+			Feng.sessionTimeoutRegistry();
+		</script>
+	</head>
+
+	<body class="gray-bg">
+		<div class="wrapper wrapper-content animated fadeInRight">
+			<form th:action="${actionURL}" method="POST"  enctype="multipart/form-data">
+			<li>如没有模版，请先下载 <a th:href="${hrefURL}">导入模版下载</a></li><br/>
+			<input type='file' accept='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel' name='file1'/><br/>
+			<input type='submit' value = '上传'/>
+			</form>
+		</div>
+	</body>
+</html>
+

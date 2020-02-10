@@ -43,6 +43,19 @@ FtpLogManage.exit = function(){
 }
 
 
+FtpLogManage.export = function () {
+	var userid = $("#userid").val();
+	var ip = $("#ip").val();
+	if((!userid)&&(!ip)){
+		Feng.info("请先选择工号或者ip！");
+		return ;
+	}
+	
+	var url = Feng.ctxPath+"/log/export?userid="+userid+"&ip="+ip;
+	window.location.href = Feng.ctxPath+url;
+}
+
+
 
 FtpLogManage.search = function () {
 	var queryData = {};

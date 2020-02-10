@@ -39,4 +39,15 @@
     order by id desc 
     limit #{offset},#{limit}
   </select>
+  
+  <select id="queryAllByCondition" parameterType="com.sf.ftp.web.beans.dto.LogCondition" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ftp_access_log
+    where 1=1  
+      <include refid="base_condition" />
+    order by id desc 
+  </select>
+  
+  
 </mapper>

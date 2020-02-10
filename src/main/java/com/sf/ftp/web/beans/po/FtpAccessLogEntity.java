@@ -2,6 +2,8 @@ package com.sf.ftp.web.beans.po;
 
 import com.alibaba.fastjson.JSON;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
+
 /**
  * 访问日志
  * @author abner.li
@@ -11,16 +13,22 @@ public class FtpAccessLogEntity {
 	
     private Long id;
 
+	@Excel(name = "工号")
     private String userid;
 
+	@Excel(name = "ip")
     private String ip;
 
+	@Excel(name = "操作")
     private String operation;
 
+	@Excel(name = "文件路径")
     private String filepath;
 
+	@Excel(name = "操作命令")
     private String command;
 
+	@Excel(name = "访问时间")
     private String accessTime;
 
     public Long getId() {

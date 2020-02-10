@@ -2,6 +2,8 @@ package com.sf.ftp.web.beans.po;
 
 import com.alibaba.fastjson.JSON;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
+
 /**
  * 用户信息
  * @author abner.li
@@ -9,28 +11,39 @@ import com.alibaba.fastjson.JSON;
  */
 public class FtpUserEntity {
 	
+	@Excel(name = "工号")
     private String userid;
 
+	@Excel(name = "主目录")
     private String homedirectory;
 
+	@Excel(name = "启用",replace= {"是_true","否_false"})
     private Boolean enableflag;
 
+	@Excel(name = "最大空闲时间(秒)")
     private Integer idletime;
 
+	@Excel(name = "写权限",replace= {"是_true","否_false"})
     private Boolean writepermission;
 
+	@Excel(name = "管理员权限",replace= {"是_true","否_false"})
     private Boolean adminpermission;
 
+	@Excel(name = "最大登录限制")
     private Integer maxloginnumber;
 
+	@Excel(name = "同ip最大登录限制")
     private Integer maxloginperip;
 
+	@Excel(name = "下载速率(byte)")
     private Integer downloadrate;
 
+	@Excel(name = "上传速率(byte)")
     private Integer uploadrate;
 
     private Integer currentLoginNumber;
 
+	@Excel(name = "有效期")
     private String expires;
 
     public String getUserid() {

@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.common.collect.Lists;
 import com.sf.ftp.FtpServerApi;
@@ -28,6 +29,7 @@ import com.sf.ftp.web.dao.FtpUserEntityMapper;
 import com.sf.ftp.web.service.AdService;
 import com.sf.ftp.web.service.FtpManageService;
 import com.sf.ftp.web.utils.ControllerUtil;
+import com.sf.ftp.web.utils.ExcelUtils;
 /**
  * ftp管理相关服务
  * @author abner.li
@@ -166,6 +168,25 @@ public class FtpManageServiceImpl implements FtpManageService{
 	@Override
 	public FtpUserEntity selectByUserId(String userid) {
 		return ftpUserEntityMapper.selectByUserId(userid);
+	}
+
+	@Override
+	public String importExcel(MultipartFile file) {
+		return ControllerUtil.importExcel(file,FtpUserEntity.class,user->{
+			return add(user).success();
+		});
+	}
+
+	@Override
+	public void exportUser(UserCondition condition) throws Exception {
+		List<FtpUserEntity> list = ftpUserEntityMapper.queryAllByCondition(condition);
+		ExcelUtils.exportExcel(list,"FTP用户列表","sheet",FtpUserEntity.class,"FTP用户列表",ControllerUtil.getResponse());
+	}
+	
+	@Override
+	public void exportLog(LogCondition condition) throws Exception {
+		List<FtpAccessLogEntity> list = ftpAccessLogEntityMapper.queryAllByCondition(condition);
+		ExcelUtils.exportExcel(list,"用户访问记录","sheet",FtpAccessLogEntity.class,"用户访问记录",ControllerUtil.getResponse());
 	}
 
 }

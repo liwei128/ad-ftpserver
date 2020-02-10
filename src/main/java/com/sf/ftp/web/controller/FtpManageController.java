@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.sf.ftp.web.beans.UserConstant;
 import com.sf.ftp.web.beans.common.PagingData;
@@ -180,5 +181,52 @@ public class FtpManageController {
 	public PagingData<FtpAccessLogEntity> list(LogCondition condition){
 		return ftpManageService.logList(condition);
 	}
+	
+    /**
+	 * 
+	 * 跳转到导入excel文件页面
+	 */
+    @RequestMapping("/user/importView")
+    public String importView(ModelMap modelMap){
+    	modelMap.addAttribute("actionURL","/user/import");
+    	modelMap.addAttribute("hrefURL","/static/userModel.xlsx");
+    	return "importView";
+    }
+    
+    /**
+     * 导入用户
+     * @param multiReq
+     * @return
+     * String
+     */
+    @RequestMapping("/user/import")
+    @ResponseBody
+    public String importUser(MultipartHttpServletRequest multiReq){
+    	return ftpManageService.importExcel(multiReq.getFile("file1"));
+    }
+    
+    /**
+     * 导出用户
+     * @param condition
+     * @throws Exception
+     * void
+     */
+    @RequestMapping("/user/export")
+    @ResponseBody
+    public void exportUser(UserCondition condition) throws Exception{
+    	ftpManageService.exportUser(condition);
+    }
+    
+    /**
+     * 导出用户访问记录
+     * @param condition
+     * @throws Exception
+     * void
+     */
+    @RequestMapping("/log/export")
+    @ResponseBody
+    public void exportLog(LogCondition condition) throws Exception{
+    	ftpManageService.exportLog(condition);
+    }
 
 }

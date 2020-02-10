@@ -127,6 +127,15 @@
 													<button type="button" class="btn btn-primary button-margin" onclick="FtpManage.delete()" id="">
 														<i class="fa fa-remove"></i>&nbsp;删除
 													</button>
+													<div class="btn-group">
+						                                <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
+						                                	<i class="fa fa-upload"></i>&nbsp;导入/导出 <span class="caret"></span>
+						                                </button>
+						                                <ul class="dropdown-menu">
+						                                    <li><a onclick="FtpManage.export()">导出</a></li>
+						                                    <li><a onclick="FtpManage.import()">导入</a></li>
+						                                </ul>
+						                            </div>
 												</div>
 											</div>
 											<table id="FtpManage"/>

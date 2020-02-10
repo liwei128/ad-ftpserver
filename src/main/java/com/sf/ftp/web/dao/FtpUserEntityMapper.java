@@ -60,4 +60,13 @@ public interface FtpUserEntityMapper {
 	 * List<FtpUserEntity>
 	 */
 	List<FtpUserEntity> queryByCondition(UserCondition condition);
+
+	
+	/**
+	 * 查询所有
+	 * @param condition
+	 * @return
+	 * List<FtpUserEntity>
+	 */
+	List<FtpUserEntity> queryAllByCondition(UserCondition condition);
 }

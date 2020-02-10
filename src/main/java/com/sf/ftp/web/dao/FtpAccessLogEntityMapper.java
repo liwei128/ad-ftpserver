@@ -27,6 +27,14 @@ public interface FtpAccessLogEntityMapper {
 	 * List<FtpAccessLogEntity>
 	 */
 	List<FtpAccessLogEntity> queryByCondition(LogCondition condition);
+
+	/**
+	 * 查询所有
+	 * @param condition
+	 * @return
+	 * List<FtpAccessLogEntity>
+	 */
+	List<FtpAccessLogEntity> queryAllByCondition(LogCondition condition);
 	
 
 }

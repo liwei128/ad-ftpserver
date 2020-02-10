@@ -78,7 +78,7 @@ public class SfFtplet extends DefaultFtplet{
 	 */
 	@Override
 	public FtpletResult onDeleteStart(FtpSession session, FtpRequest request) throws FtpException, IOException {
-		if(!checkPermission(session,request,Permission.DELETE)) {
+		if(!checkPermission(session,Permission.DELETE)) {
 			return FtpletResult.SKIP;
 		}
 		FtpRecord ftpRecord = Operation.DELETE.builder(session, request);
@@ -91,7 +91,7 @@ public class SfFtplet extends DefaultFtplet{
 	 */
 	@Override
 	public FtpletResult onUploadStart(FtpSession session, FtpRequest request) throws FtpException, IOException {
-		if(!checkPermission(session,request,Permission.UPLOAD)) {
+		if(!checkPermission(session,Permission.UPLOAD)) {
 			return FtpletResult.SKIP;
 		}
 		FtpRecord ftpRecord = Operation.UPLOAD.builder(session, request);
@@ -104,7 +104,7 @@ public class SfFtplet extends DefaultFtplet{
 	 */
 	@Override
 	public FtpletResult onDownloadStart(FtpSession session, FtpRequest request) throws FtpException, IOException {
-		if(!checkPermission(session,request,Permission.DOWNLOAD)) {
+		if(!checkPermission(session,Permission.DOWNLOAD)) {
 			return FtpletResult.SKIP;
 		}
 		FtpRecord ftpRecord = Operation.DOWNLOAD.builder(session, request);
@@ -117,7 +117,7 @@ public class SfFtplet extends DefaultFtplet{
 	 */
 	@Override
 	public FtpletResult onRmdirStart(FtpSession session, FtpRequest request) throws FtpException, IOException {
-		if(!checkPermission(session,request,Permission.DELETE)) {
+		if(!checkPermission(session,Permission.DELETE)) {
 			return FtpletResult.SKIP;
 		}
 		FtpRecord ftpRecord = Operation.RMDIR.builder(session, request);
@@ -130,7 +130,7 @@ public class SfFtplet extends DefaultFtplet{
 	 */
 	@Override
 	public FtpletResult onMkdirStart(FtpSession session, FtpRequest request) throws FtpException, IOException {
-		if(!checkPermission(session,request,Permission.UPLOAD)) {
+		if(!checkPermission(session,Permission.UPLOAD)) {
 			return FtpletResult.SKIP;
 		}
 		FtpRecord ftpRecord = Operation.MKDIR.builder(session, request);
@@ -143,7 +143,7 @@ public class SfFtplet extends DefaultFtplet{
 	 */
 	@Override
 	public FtpletResult onUploadUniqueStart(FtpSession session, FtpRequest request) throws FtpException, IOException {
-		if(!checkPermission(session,request,Permission.UPLOAD)) {
+		if(!checkPermission(session,Permission.UPLOAD)) {
 			return FtpletResult.SKIP;
 		}
 		FtpRecord ftpRecord = Operation.UPLOAD.builder(session, request);
@@ -157,7 +157,7 @@ public class SfFtplet extends DefaultFtplet{
 	 */
 	@Override
 	public FtpletResult onAppendStart(FtpSession session, FtpRequest request) throws FtpException, IOException {
-		if(!checkPermission(session,request,Permission.UPLOAD)) {
+		if(!checkPermission(session,Permission.UPLOAD)) {
 			return FtpletResult.SKIP;
 		}
 		FtpRecord ftpRecord = Operation.UPLOAD.builder(session, request);
@@ -173,7 +173,7 @@ public class SfFtplet extends DefaultFtplet{
 	 */
 	@Override
 	public FtpletResult onRenameStart(FtpSession session, FtpRequest request) throws FtpException, IOException {
-		if(!checkPermission(session,request,Permission.MODIFY)) {
+		if(!checkPermission(session,Permission.MODIFY)) {
 			return FtpletResult.SKIP;
 		}
 		FtpRecord ftpRecord = Operation.RENAME.builder(session, request);
@@ -182,7 +182,7 @@ public class SfFtplet extends DefaultFtplet{
 	}
 
 	
-	private boolean checkPermission(FtpSession session,FtpRequest request, Permission permission) {
+	private boolean checkPermission(FtpSession session, Permission permission) {
 		SfBaseUser user = (SfBaseUser)session.getUser();
 		boolean isOk = user.getPermissions().contains(permission);
 		if(!isOk) {

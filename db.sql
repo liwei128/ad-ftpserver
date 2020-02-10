@@ -3,7 +3,7 @@ CREATE TABLE `ftp_user` (
   `homedirectory` varchar(255) NOT NULL COMMENT '主目录',
   `enableflag` tinyint(1) NOT NULL DEFAULT '1' COMMENT '启用1,0',
   `idletime` int(11) NOT NULL DEFAULT '300' COMMENT '以秒为单位，设置最大空闲时间',
-  `writepermission` tinyint(1) NOT NULL DEFAULT '1' COMMENT '写权限1,0',
+  `permission` varchar(255) DEFAULT NULL COMMENT '访问权限',
   `adminpermission` tinyint(1) NOT NULL DEFAULT '0' COMMENT '管理员权限1,0',
   `maxloginnumber` int(11) NOT NULL DEFAULT '0' COMMENT '最大登录数',
   `maxloginperip` int(11) NOT NULL DEFAULT '0' COMMENT '同ip最大登录数',
@@ -20,7 +20,6 @@ CREATE TABLE `ftp_access_log` (
   `ip` varchar(64) NOT NULL COMMENT 'ip',
   `operation` varchar(64) NOT NULL COMMENT '操作',
   `filepath` varchar(255) NOT NULL COMMENT '文件路径',
-  `command` varchar(255) NOT NULL COMMENT '操作命令',
   `access_time` varchar(64) NOT NULL COMMENT '访问时间yyyy-MM-dd HH:mm:ss',
   PRIMARY KEY (`id`),
   KEY `userid_index` (`userid`) USING BTREE

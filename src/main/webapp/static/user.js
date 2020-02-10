@@ -16,7 +16,7 @@ FtpManage.initColumn = function () {
             {title: '主目录', field: 'homedirectory', visible: true, align: 'center', valign: 'middle'},
             {title: '启用', field: 'enableflag', visible: true, align: 'center', valign: 'middle',formatter:FtpManage.statusView},
             {title: '最大空闲时间(秒)', field: 'idletime', visible: true, align: 'center', valign: 'middle'},
-            {title: '写权限', field: 'writepermission', visible: true, align: 'center', valign: 'middle' , formatter:FtpManage.writepermissionView },
+            {title: '访问权限', field: 'permission', visible: true, align: 'center', valign: 'middle' },
             {title: '管理员权限', field: 'adminpermission', visible: true, align: 'center', valign: 'middle',formatter:FtpManage.adminpermissionView},
             {title: '最大的登录限制', field: 'maxloginnumber', visible: true, align: 'center', valign: 'middle'},
             {title: '同ip最大登录限制', field: 'maxloginperip', visible: true, align: 'center', valign: 'middle'},
@@ -26,9 +26,7 @@ FtpManage.initColumn = function () {
             {title: '有效期', field: 'expires', visible: true, align: 'center', valign: 'middle'}
     ];
 };
-FtpManage.writepermissionView = function(value, row, index){
-	return value?"是":"否";
-}
+
 FtpManage.statusView = function(value, row, index){
 	return value?"是":"否";
 }

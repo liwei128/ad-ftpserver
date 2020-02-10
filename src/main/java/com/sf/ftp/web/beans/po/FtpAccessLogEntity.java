@@ -25,9 +25,6 @@ public class FtpAccessLogEntity {
 	@Excel(name = "文件路径")
     private String filepath;
 
-	@Excel(name = "操作命令")
-    private String command;
-
 	@Excel(name = "访问时间")
     private String accessTime;
 
@@ -69,14 +66,6 @@ public class FtpAccessLogEntity {
 
     public void setFilepath(String filepath) {
         this.filepath = filepath;
-    }
-
-    public String getCommand() {
-        return command;
-    }
-
-    public void setCommand(String command) {
-        this.command = command;
     }
 
     public String getAccessTime() {

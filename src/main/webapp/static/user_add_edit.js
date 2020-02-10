@@ -50,7 +50,7 @@ FtpUserInfoDlg.collectData = function() {
     .set('homedirectory')
     .set('enableflag')
     .set('idletime')
-    .set('writepermission')
+    .set('permission')
     .set('adminpermission')
     .set('maxloginnumber')
     .set('maxloginperip')

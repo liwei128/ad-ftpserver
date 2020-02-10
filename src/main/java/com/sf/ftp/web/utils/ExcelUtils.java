@@ -139,8 +139,6 @@ public class ExcelUtils {
         ImportParams params = new ImportParams();
         params.setTitleRows(titleRows);
         params.setHeadRows(headerRows);
-//        params.setNeedSave(true);
-//        params.setSaveUrl("/excel/");
         try {
             return ExcelImportUtil.importExcel(new File(filePath), pojoClass, params);
         } catch (NoSuchElementException e) {
@@ -216,8 +214,6 @@ public class ExcelUtils {
         ImportParams params = new ImportParams();
         params.setTitleRows(titleRows);
         params.setHeadRows(headerRows);
-//        params.setSaveUrl("/excel/");
-//        params.setNeedSave(true);
         params.setNeedVerfiy(needVerfiy);
         try {
             return ExcelImportUtil.importExcel(inputStream, pojoClass, params);

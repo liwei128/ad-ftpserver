@@ -62,17 +62,11 @@
 							</div>
 							<div class="hr-line-dashed"></div>
 							<div class="form-group">
-								<label class="col-sm-4 control-label">写权限</label>
+								<label class="col-sm-4 control-label">访问权限</label>
 								<div class="col-sm-8">
-									<select class="form-control" id="writepermission"
-										name="writepermission" th:if="${item.writepermission}">
-										<option selected value='true'>是</option>
-										<option value='false'>否</option>
-									</select> <select class="form-control" id="writepermission"
-										name="writepermission" th:if="${!item.writepermission}">
-										<option value='true'>是</option>
-										<option selected value='false'>否</option>
-									</select>
+									<input class="form-control" id="permission"
+										name="permission" th:value="${item.permission}"
+										type="text" placeholder = "上传,下载,删除,修改">
 								</div>
 							</div>
 							<div class="hr-line-dashed"></div>

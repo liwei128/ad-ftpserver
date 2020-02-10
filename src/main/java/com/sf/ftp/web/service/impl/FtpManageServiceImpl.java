@@ -3,7 +3,6 @@ package com.sf.ftp.web.service.impl;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ServiceLoader;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ftpserver.ftplet.FtpStatistics;
 import org.slf4j.Logger;
@@ -127,17 +126,31 @@ public class FtpManageServiceImpl implements FtpManageService{
 
 	@Override
 	public ResultData<Void> modify(FtpUserEntity ftpUserEntity) {
-		checkHomedirectory(ftpUserEntity);
+		ResultData<Void> res = checkFtpUserEntity(ftpUserEntity);
+		if(!res.success()) {
+			return res;
+		}
 		int count = ftpUserEntityMapper.updateByUserId(ftpUserEntity);
 		return count > 0 ? ResultData.getInstance() : ResultData.getInstance(BaseRetCode.FAIL);
 	}
 
-	@Override
-	public ResultData<Void> add(FtpUserEntity ftpUserEntity) {
+	private ResultData<Void> checkFtpUserEntity(FtpUserEntity ftpUserEntity) {
 		if(StringUtils.isEmpty(ftpUserEntity.getUserid())||StringUtils.isEmpty(ftpUserEntity.getHomedirectory())) {
 			return ResultData.getInstance(BaseRetCode.PARAM_MISSING);
 		}
 		checkHomedirectory(ftpUserEntity);
+		if(!checkPermission(ftpUserEntity)) {
+			return ResultData.getInstance(BaseRetCode.PERMISSION_FAILD);
+		}
+		return ResultData.getInstance();
+	}
+
+	@Override
+	public ResultData<Void> add(FtpUserEntity ftpUserEntity) {
+		ResultData<Void> res = checkFtpUserEntity(ftpUserEntity);
+		if(!res.success()) {
+			return res;
+		}
 		if(!adService.isAdUser(ftpUserEntity.getUserid())) {
 			return ResultData.getInstance(BaseRetCode.NOT_AD_ACCOUNT);
 		}
@@ -150,11 +163,22 @@ public class FtpManageServiceImpl implements FtpManageService{
 		return count > 0 ? ResultData.getInstance() : ResultData.getInstance(BaseRetCode.FAIL);
 	}
 
+	private boolean checkPermission(FtpUserEntity ftpUserEntity) {
+		String permissions = ftpUserEntity.getPermission();
+		if(StringUtils.isEmpty(permissions)) {
+			return true;
+		}
+		String[] permissionList = permissions.split(",");
+		for(String permission:permissionList) {
+			if(FtpUserEntity.Permission.getByInfo(permission)==null) {
+				return false;
+			};
+		}
+		return true;
+	}
+
 	private void checkHomedirectory(FtpUserEntity ftpUserEntity) {
 		String homedirectory = ftpUserEntity.getHomedirectory();
-		if(StringUtils.isEmpty(homedirectory)) {
-			return;
-		}
 		StringBuilder text = new StringBuilder();
 		char[] charArray = homedirectory.toCharArray();
 		for(char a:charArray){

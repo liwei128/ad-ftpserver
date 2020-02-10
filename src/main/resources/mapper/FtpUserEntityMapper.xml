@@ -6,7 +6,7 @@
     <result column="homedirectory" jdbcType="VARCHAR" property="homedirectory" />
     <result column="enableflag" jdbcType="BIT" property="enableflag" />
     <result column="idletime" jdbcType="INTEGER" property="idletime" />
-    <result column="writepermission" jdbcType="BIT" property="writepermission" />
+    <result column="permission" jdbcType="VARCHAR" property="permission" />
     <result column="adminpermission" jdbcType="BIT" property="adminpermission" />
     <result column="maxloginnumber" jdbcType="INTEGER" property="maxloginnumber" />
     <result column="maxloginperip" jdbcType="INTEGER" property="maxloginperip" />
@@ -17,7 +17,7 @@
   </resultMap>
   
   <sql id="Base_Column_List">
-    userid, homedirectory, enableflag, idletime, writepermission, adminpermission, maxloginnumber, 
+    userid, homedirectory, enableflag, idletime, permission, adminpermission, maxloginnumber, 
     maxloginperip, downloadrate, uploadrate, current_login_number, expires
   </sql>
   
@@ -92,8 +92,8 @@
       <if test="idletime != null">
         idletime,
       </if>
-      <if test="writepermission != null">
-        writepermission,
+      <if test="permission != null">
+        permission,
       </if>
       <if test="adminpermission != null">
         adminpermission,
@@ -127,8 +127,8 @@
       <if test="idletime != null">
         #{idletime,jdbcType=INTEGER},
       </if>
-      <if test="writepermission != null">
-        #{writepermission,jdbcType=BIT},
+      <if test="permission != null">
+        #{permission,jdbcType=VARCHAR},
       </if>
       <if test="adminpermission != null">
         #{adminpermission,jdbcType=BIT},
@@ -163,8 +163,8 @@
       <if test="idletime != null">
         idletime = #{idletime,jdbcType=INTEGER},
       </if>
-      <if test="writepermission != null">
-        writepermission = #{writepermission,jdbcType=BIT},
+      <if test="permission != null">
+        permission = #{permission,jdbcType=VARCHAR},
       </if>
       <if test="adminpermission != null">
         adminpermission = #{adminpermission,jdbcType=BIT},

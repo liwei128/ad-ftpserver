@@ -32,7 +32,7 @@ public class DefaultFtpRecordDao implements FtpRecordDao {
 
 	private FtpStatistics historyStatistics;
 
-	private String insertRecordStmt = "INSERT INTO ftp_access_log(userid, ip, operation, filepath, command, access_time) VALUES ('{userid}', '{ip}', '{operation}', '{filepath}', '{command}', '{access_time}')";
+	private String insertRecordStmt = "INSERT INTO ftp_access_log(userid, ip, operation, filepath, access_time) VALUES ('{userid}', '{ip}', '{operation}', '{filepath}', '{access_time}')";
 
 	private String updateUserLoginStmt = "update ftp_user set current_login_number = '{current_login_number}' where userid = '{userid}' ";
 	

@@ -1,5 +1,6 @@
 package com.sf.ftp.web.beans.po;
 
+
 import com.alibaba.fastjson.JSON;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
@@ -23,8 +24,8 @@ public class FtpUserEntity {
 	@Excel(name = "最大空闲时间(秒)")
     private Integer idletime;
 
-	@Excel(name = "写权限",replace= {"是_true","否_false"})
-    private Boolean writepermission;
+	@Excel(name = "访问权限")
+    private String permission;
 
 	@Excel(name = "管理员权限",replace= {"是_true","否_false"})
     private Boolean adminpermission;
@@ -45,6 +46,51 @@ public class FtpUserEntity {
 
 	@Excel(name = "有效期")
     private String expires;
+	
+	/**
+	 * 访问权限
+	 * @author abner.li
+	 * @date 2020年2月10日下午7:56:39
+	 */
+	public enum Permission{
+	
+		/**
+		 * 删除
+		 */
+		DELETE("删除"),
+		/**
+		 * 上传
+		 */
+		UPLOAD("上传"),
+		/**
+		 * 下载
+		 */
+		DOWNLOAD("下载"),
+		/**
+		 * 修改
+		 */
+		MODIFY("修改");
+		
+		private String info;
+
+		private Permission(String info) {
+			this.info = info;
+		}
+
+		public String getInfo() {
+			return info;
+		}
+
+		public static Permission getByInfo(String info) {
+			for(Permission permission:values()) {
+				if(permission.getInfo().equals(info)) {
+					return permission;
+				}
+			}
+			return null;
+		}
+		
+	}
 
     public String getUserid() {
         return userid;
@@ -78,15 +124,15 @@ public class FtpUserEntity {
         this.idletime = idletime;
     }
 
-    public Boolean getWritepermission() {
-        return writepermission;
-    }
+    public String getPermission() {
+		return permission;
+	}
 
-    public void setWritepermission(Boolean writepermission) {
-        this.writepermission = writepermission;
-    }
+	public void setPermission(String permission) {
+		this.permission = permission;
+	}
 
-    public Boolean getAdminpermission() {
+	public Boolean getAdminpermission() {
         return adminpermission;
     }
 

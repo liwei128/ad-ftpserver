@@ -15,7 +15,6 @@ FtpLogManage.initColumn = function () {
             {title: 'ip', field: 'ip', visible: true, align: 'center', valign: 'middle'},
             {title: '操作', field: 'operation', visible: true, align: 'center', valign: 'middle'},
             {title: '文件路径', field: 'filepath', visible: true, align: 'center', valign: 'middle'},
-            {title: '操作命令', field: 'command', visible: true, align: 'center', valign: 'middle'},
             {title: '访问时间', field: 'accessTime', visible: true, align: 'center', valign: 'middle'}
     ];
 };

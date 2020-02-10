@@ -38,11 +38,6 @@ public class FtpRecord {
 	private String filePath;
 	
 	/**
-	 * 操作命令
-	 */
-	private String command;
-	
-	/**
 	 * 操作类型
 	 * @author 01383518
 	 * @date 2020年1月30日下午8:44:00
@@ -89,18 +84,7 @@ public class FtpRecord {
 		/**
 		 * 重命名
 		 */
-		RENAME("重命名"),
-		/**
-		 * SITE命令
-		 */
-		SITE("SITE命令"){
-			@Override
-			public FtpRecord builder(FtpSession session, FtpRequest request) throws FtpException{
-				FtpRecord builder = super.builderIgnoreArgument(session, request);;
-				builder.setCommand(request.getArgument());
-				return builder;
-			}
-		};
+		RENAME("重命名");
 		
 		private String info;
 		
@@ -156,16 +140,6 @@ public class FtpRecord {
 	}
 
 
-	public String getCommand() {
-		return command;
-	}
-
-
-	public void setCommand(String command) {
-		this.command = command;
-	}
-
-
 	public String getIp() {
 		return ip;
 	}
@@ -181,7 +155,6 @@ public class FtpRecord {
 		this.ip = ip;
 		this.operation = operation;
 		this.filePath = filePath.replaceAll("///", "/").replaceAll("//", "/");
-		this.command = "";
 	}
 	
 	public Map<String,Object> toSqlMap(){
@@ -190,7 +163,6 @@ public class FtpRecord {
 		map.put("ip", ip);
 		map.put("operation", operation.getInfo());
 		map.put("filepath", filePath);
-		map.put("command", command);
 		map.put("access_time", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 		return map;
 	}

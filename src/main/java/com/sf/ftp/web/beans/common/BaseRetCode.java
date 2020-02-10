@@ -48,7 +48,12 @@ public enum BaseRetCode implements RetCode{
 	/**
 	 * 认证失败
 	 */
-	AUTH_FAILD(8,"认证失败");
+	AUTH_FAILD(8,"认证失败"),
+	
+	/**
+	 * 权限设置不正确
+	 */
+	PERMISSION_FAILD(9,"权限设置不正确");
 
 	
 	private int code;

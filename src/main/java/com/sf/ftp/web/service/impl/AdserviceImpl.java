@@ -21,6 +21,8 @@ import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.sf.ftp.web.beans.common.BaseRetCode;
+import com.sf.ftp.web.beans.common.ResultData;
 import com.sf.ftp.web.service.AdService;
 
 /**
@@ -57,31 +59,33 @@ public class AdserviceImpl implements AdService{
 	private String searchBase;
 	
 	@Override
-	public boolean isAdUser(String userid) {
+	public ResultData<String> isAdUser(String userid) {
 		if (SIT.equals(profiles)) {
-			return true;
+			return ResultData.getInstance("");
 		}
 		try {
-			Map<String, List<String>> info = queryInfo("sAMAccountName",userid,"distinguishedName");
-			return info.size()>0&&StringUtils.isNotEmpty(info.get("distinguishedName").get(0));
+			Map<String, List<String>> info = queryInfo("sAMAccountName",userid,"distinguishedName","sn");
+			if(info.size()>0&&StringUtils.isNotEmpty(info.get("distinguishedName").get(0))){
+				String username = info.get("sn")==null?"":info.get("sn").get(0);
+				return ResultData.getInstance(username);
+			}
 		} catch (Exception e) {
 			logger.error("isAdUser:{},Exception",userid,e);
 		}
-		return false;
-		
+		return ResultData.getInstance(BaseRetCode.FAIL);
 	}
 	
 	@Override
-	public boolean checkUser(String username, String password) {
+	public boolean checkUser(String userid, String password) {
 		if (SIT.equals(profiles)) {
 			return DEFAULT_PWD.equals(password);
 		}
 		DirContext dc = null;
 		try {
-			dc = createUserDc(username, password);
+			dc = createUserDc(userid, password);
 			return true;
 		} catch (Exception e) {
-			logger.info("user:{} adCheck fail", username);
+			logger.info("user:{} adCheck fail", userid);
 			return false;
 		} finally {
 			if (dc != null) {

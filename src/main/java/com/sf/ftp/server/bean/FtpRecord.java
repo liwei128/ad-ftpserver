@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ftpserver.ftplet.FtpException;
 import org.apache.ftpserver.ftplet.FtpRequest;
 import org.apache.ftpserver.ftplet.FtpSession;
+import org.apache.ftpserver.ftplet.User;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
@@ -21,6 +22,11 @@ public class FtpRecord {
 	 * 用户工号
 	 */
 	private String userid;
+	
+	/**
+	 * 用户名
+	 */
+	private String username;
 	
 	/**
 	 * 用户ip
@@ -95,10 +101,14 @@ public class FtpRecord {
 		};
 		
 		protected FtpRecord builderIgnoreArgument(FtpSession session, FtpRequest request) throws FtpException {
-			String user = session.getUser().toString();
+			User user = session.getUser();
+			String username = "";
+			if(user instanceof SfAdUser) {
+				username = ((SfAdUser)user).getUser();
+			}
 			String ip = session.getClientAddress().getAddress().getHostAddress();
-			String filePath = session.getUser().getHomeDirectory()+session.getFileSystemView().getWorkingDirectory().getAbsolutePath();
-			return new FtpRecord(user, ip, this,filePath);
+			String filePath = user.getHomeDirectory()+session.getFileSystemView().getWorkingDirectory().getAbsolutePath();
+			return new FtpRecord(user.getName(),username, ip, this,filePath);
 		};
 		
 		public String getInfo() {
@@ -148,18 +158,31 @@ public class FtpRecord {
 	public void setIp(String ip) {
 		this.ip = ip;
 	}
+	
+	public String getUsername() {
+		return username;
+	}
 
-	private FtpRecord(String userid, String ip, Operation operation, String filePath) {
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+
+	public FtpRecord(String userid, String username, String ip, Operation operation, String filePath) {
 		super();
 		this.userid = userid;
+		this.username = username;
 		this.ip = ip;
 		this.operation = operation;
 		this.filePath = filePath.replaceAll("///", "/").replaceAll("//", "/");
 	}
-	
+
+
 	public Map<String,Object> toSqlMap(){
 		Map<String, Object> map = Maps.newHashMap();
 		map.put("userid", userid);
+		map.put("username", username);
 		map.put("ip", ip);
 		map.put("operation", operation.getInfo());
 		map.put("filepath", filePath);

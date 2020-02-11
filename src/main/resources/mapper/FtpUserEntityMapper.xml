@@ -3,6 +3,7 @@
 <mapper namespace="com.sf.ftp.web.dao.FtpUserEntityMapper">
   <resultMap id="BaseResultMap" type="com.sf.ftp.web.beans.po.FtpUserEntity">
     <id column="userid" jdbcType="VARCHAR" property="userid" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="homedirectory" jdbcType="VARCHAR" property="homedirectory" />
     <result column="enableflag" jdbcType="BIT" property="enableflag" />
     <result column="idletime" jdbcType="INTEGER" property="idletime" />
@@ -17,7 +18,7 @@
   </resultMap>
   
   <sql id="Base_Column_List">
-    userid, homedirectory, enableflag, idletime, permission, adminpermission, maxloginnumber, 
+    userid,username, homedirectory, enableflag, idletime, permission, adminpermission, maxloginnumber, 
     maxloginperip, downloadrate, uploadrate, current_login_number, expires
   </sql>
   
@@ -83,6 +84,9 @@
       <if test="userid != null">
         userid,
       </if>
+      <if test="username != null">
+        username,
+      </if>
       <if test="homedirectory != null">
         homedirectory,
       </if>
@@ -117,6 +121,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userid != null">
         #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
       </if>
       <if test="homedirectory != null">
         #{homedirectory,jdbcType=VARCHAR},
@@ -154,6 +161,9 @@
   <update id="updateByUserId" parameterType="com.sf.ftp.web.beans.po.FtpUserEntity">
     update ftp_user
     <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
       <if test="homedirectory != null">
         homedirectory = #{homedirectory,jdbcType=VARCHAR},
       </if>

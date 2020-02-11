@@ -12,7 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.common.collect.Lists;
-import com.sf.ftp.FtpServerApi;
+import com.sf.ftp.common.FtpServerApi;
+import com.sf.ftp.common.Permission;
 import com.sf.ftp.web.beans.UserConstant;
 import com.sf.ftp.web.beans.common.BaseRetCode;
 import com.sf.ftp.web.beans.common.PagingData;
@@ -39,7 +40,7 @@ public class FtpManageServiceImpl implements FtpManageService{
 	
 	private final static Logger logger = LoggerFactory.getLogger(FtpManageServiceImpl.class);
 	
-	private final static List<Character> SPECIAL_CHARS=Lists.newArrayList(':','*','?','"','<','>','|');
+	private final static List<Character> SPECIAL_CHARS=Lists.newArrayList('\'','\\',':','*','?','"','<','>','|','$','^','[',']','{','}');
 
 	@Autowired
 	private AdService adService;
@@ -151,9 +152,11 @@ public class FtpManageServiceImpl implements FtpManageService{
 		if(!res.success()) {
 			return res;
 		}
-		if(!adService.isAdUser(ftpUserEntity.getUserid())) {
+		ResultData<String> adUser = adService.isAdUser(ftpUserEntity.getUserid());
+		if(!adUser.success()) {
 			return ResultData.getInstance(BaseRetCode.NOT_AD_ACCOUNT);
 		}
+		ftpUserEntity.setUsername(adUser.getData());
 		int count = 0;
 		if(ftpUserEntityMapper.selectByUserId(ftpUserEntity.getUserid())!=null) {
 			count = ftpUserEntityMapper.updateByUserId(ftpUserEntity);
@@ -170,7 +173,7 @@ public class FtpManageServiceImpl implements FtpManageService{
 		}
 		String[] permissionList = permissions.split(",");
 		for(String permission:permissionList) {
-			if(FtpUserEntity.Permission.getByInfo(permission)==null) {
+			if(Permission.getByInfo(permission)==null) {
 				return false;
 			};
 		}

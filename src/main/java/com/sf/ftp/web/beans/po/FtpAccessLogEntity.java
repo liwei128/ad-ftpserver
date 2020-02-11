@@ -16,6 +16,9 @@ public class FtpAccessLogEntity {
 	@Excel(name = "工号")
     private String userid;
 
+	@Excel(name = "用户名")
+    private String username;
+	
 	@Excel(name = "ip")
     private String ip;
 
@@ -76,6 +79,14 @@ public class FtpAccessLogEntity {
         this.accessTime = accessTime;
     }
     
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 	@Override
 	public String toString() {
 		return JSON.toJSONString(this);

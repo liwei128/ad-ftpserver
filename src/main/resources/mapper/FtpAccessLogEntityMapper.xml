@@ -4,13 +4,14 @@
   <resultMap id="BaseResultMap" type="com.sf.ftp.web.beans.po.FtpAccessLogEntity">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="userid" jdbcType="VARCHAR" property="userid" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="ip" jdbcType="VARCHAR" property="ip" />
     <result column="operation" jdbcType="VARCHAR" property="operation" />
     <result column="filepath" jdbcType="VARCHAR" property="filepath" />
     <result column="access_time" jdbcType="VARCHAR" property="accessTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, userid, ip, operation, filepath, access_time
+    id, userid,username, ip, operation, filepath, access_time
   </sql>
   
   <sql id="base_condition">

@@ -1,5 +1,7 @@
 package com.sf.ftp.web.service;
 
+import com.sf.ftp.web.beans.common.ResultData;
+
 /**
  * AD相关服务
  * @author abner.li
@@ -9,19 +11,19 @@ public interface AdService {
 
 	/**
 	 * 域账号校验
-	 * @param username
+	 * @param userid
 	 * @param password
 	 * @return
 	 * boolean
 	 */
-	boolean checkUser(String username, String password);
+	boolean checkUser(String userid, String password);
 
 	/**
 	 * 是否为域账号
 	 * @param userid
 	 * @return
-	 * boolean
+	 * ResultData<String>
 	 */
-	boolean isAdUser(String userid);
+	ResultData<String> isAdUser(String userid);
 
 }

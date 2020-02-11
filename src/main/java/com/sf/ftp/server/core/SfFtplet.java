@@ -12,10 +12,10 @@ import org.apache.ftpserver.ftplet.FtpletResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.sf.ftp.common.Permission;
 import com.sf.ftp.server.bean.FtpRecord;
 import com.sf.ftp.server.bean.FtpRecord.Operation;
-import com.sf.ftp.server.bean.SfBaseUser;
-import com.sf.ftp.server.bean.SfBaseUser.Permission;
+import com.sf.ftp.server.bean.SfAdUser;
 import com.sf.ftp.server.dao.FtpRecordDao;
 
 /**
@@ -183,16 +183,16 @@ public class SfFtplet extends DefaultFtplet{
 
 	
 	private boolean checkPermission(FtpSession session, Permission permission) {
-		SfBaseUser user = (SfBaseUser)session.getUser();
-		boolean isOk = user.getPermissions().contains(permission);
-		if(!isOk) {
+		SfAdUser user = (SfAdUser)session.getUser();
+		if(!user.getPermissions().contains(permission)) {
 			try {
 				session.write(new DefaultFtpReply(FtpReply.REPLY_550_REQUESTED_ACTION_NOT_TAKEN, "not permission "+permission));
 			} catch (Exception e) {
 				logger.error("session.write() fail",e);
 			}
+			return false;
 		}
-		return isOk;
+		return true;
 	}
 	
 }

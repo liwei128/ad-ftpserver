@@ -14,6 +14,9 @@ public class FtpUserEntity {
 	
 	@Excel(name = "工号")
     private String userid;
+	
+	@Excel(name = "用户名")
+    private String username;
 
 	@Excel(name = "主目录")
     private String homedirectory;
@@ -47,50 +50,6 @@ public class FtpUserEntity {
 	@Excel(name = "有效期")
     private String expires;
 	
-	/**
-	 * 访问权限
-	 * @author abner.li
-	 * @date 2020年2月10日下午7:56:39
-	 */
-	public enum Permission{
-	
-		/**
-		 * 删除
-		 */
-		DELETE("删除"),
-		/**
-		 * 上传
-		 */
-		UPLOAD("上传"),
-		/**
-		 * 下载
-		 */
-		DOWNLOAD("下载"),
-		/**
-		 * 修改
-		 */
-		MODIFY("修改");
-		
-		private String info;
-
-		private Permission(String info) {
-			this.info = info;
-		}
-
-		public String getInfo() {
-			return info;
-		}
-
-		public static Permission getByInfo(String info) {
-			for(Permission permission:values()) {
-				if(permission.getInfo().equals(info)) {
-					return permission;
-				}
-			}
-			return null;
-		}
-		
-	}
 
     public String getUserid() {
         return userid;
@@ -187,6 +146,14 @@ public class FtpUserEntity {
     public void setExpires(String expires) {
         this.expires = expires;
     }
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
 	@Override
 	public String toString() {

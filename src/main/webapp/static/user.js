@@ -13,6 +13,7 @@ FtpManage.initColumn = function () {
     return [
 			{field: 'selectItem', radio: true},
             {title: '工号', field: 'userid', visible: true, align: 'center', valign: 'middle'},
+            {title: '用户名', field: 'username', visible: true, align: 'center', valign: 'middle'},
             {title: '主目录', field: 'homedirectory', visible: true, align: 'center', valign: 'middle'},
             {title: '启用', field: 'enableflag', visible: true, align: 'center', valign: 'middle',formatter:FtpManage.statusView},
             {title: '最大空闲时间(秒)', field: 'idletime', visible: true, align: 'center', valign: 'middle'},

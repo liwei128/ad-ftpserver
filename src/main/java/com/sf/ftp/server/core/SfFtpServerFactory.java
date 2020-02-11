@@ -36,7 +36,7 @@ public class SfFtpServerFactory {
 		
 		DefaultFtpServerContext serverContext = new DefaultFtpServerContext();
 		//用户管理
-		serverContext.setUserManager(new SfUserManager(systemConfig).getUserManager());
+		serverContext.setUserManager(new SfAdUserManager(systemConfig));
 		//连接配置
 		serverContext.setConnectionConfig(systemConfig.getConnectionConfig());
 		//服务监听

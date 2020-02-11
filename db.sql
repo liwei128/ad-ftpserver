@@ -1,5 +1,6 @@
 CREATE TABLE `ftp_user` (
   `userid` varchar(64) NOT NULL COMMENT '工号',
+  `username` varchar(255) DEFAULT NULL COMMENT '用户名',
   `homedirectory` varchar(255) NOT NULL COMMENT '主目录',
   `enableflag` tinyint(1) NOT NULL DEFAULT '1' COMMENT '启用1,0',
   `idletime` int(11) NOT NULL DEFAULT '300' COMMENT '以秒为单位，设置最大空闲时间',
@@ -17,6 +18,7 @@ CREATE TABLE `ftp_user` (
 CREATE TABLE `ftp_access_log` (
   `id` bigint(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `userid` varchar(64) NOT NULL COMMENT '工号',
+  `username` varchar(255) DEFAULT NULL COMMENT '用户名',
   `ip` varchar(64) NOT NULL COMMENT 'ip',
   `operation` varchar(64) NOT NULL COMMENT '操作',
   `filepath` varchar(255) NOT NULL COMMENT '文件路径',
@@ -24,6 +26,7 @@ CREATE TABLE `ftp_access_log` (
   PRIMARY KEY (`id`),
   KEY `userid_index` (`userid`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 CREATE TABLE `ftp_statistics` (
   `id` bigint(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',

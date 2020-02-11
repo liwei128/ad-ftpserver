@@ -2,7 +2,7 @@ package com.sf.ftp.server;
 
 import org.apache.ftpserver.ftplet.FtpStatistics;
 
-import com.sf.ftp.FtpServerApi;
+import com.sf.ftp.common.FtpServerApi;
 import com.sf.ftp.server.dao.FtpRecordDao;
 
 /**

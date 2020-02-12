@@ -2,7 +2,7 @@ package com.sf.ftp.server.dao;
 
 import org.apache.ftpserver.ftplet.FtpStatistics;
 
-import com.sf.ftp.server.bean.FtpRecord;
+import com.sf.ftp.server.bean.SfFtpRecord;
 /**
  * 操作记录保存入库
  * @author abner.li
@@ -13,7 +13,7 @@ public interface FtpRecordDao {
 	 * 保存用户操作记录
 	 * @param ftpRecord
 	 */
-	public void saveRecord(FtpRecord ftpRecord);
+	public void saveRecord(SfFtpRecord ftpRecord);
 	
 	/**
 	 * 更新用户在线情况

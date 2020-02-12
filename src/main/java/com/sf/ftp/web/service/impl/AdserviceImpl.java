@@ -36,6 +36,9 @@ public class AdserviceImpl implements AdService{
 	private final static Logger logger = LoggerFactory.getLogger(AdserviceImpl.class);
 	private final static String SIT = "sit";
 	private final static String DEFAULT_PWD = "123";
+	private final static String USERID = "sAMAccountName";
+	private final static String DIS_NAME = "distinguishedName";
+	private final static String USER_NAME = "sn";
 	
 	@Value("${profiles}")
 	private String profiles;
@@ -64,9 +67,9 @@ public class AdserviceImpl implements AdService{
 			return ResultData.getInstance("");
 		}
 		try {
-			Map<String, List<String>> info = queryInfo("sAMAccountName",userid,"distinguishedName","sn");
-			if(info.size()>0&&StringUtils.isNotEmpty(info.get("distinguishedName").get(0))){
-				String username = info.get("sn")==null?"":info.get("sn").get(0);
+			Map<String, List<String>> info = queryInfo(USERID,userid,DIS_NAME,USER_NAME);
+			if(info.size()>0&&StringUtils.isNotEmpty(info.get(DIS_NAME).get(0))){
+				String username = info.get(USER_NAME)==null?"":info.get(USER_NAME).get(0);
 				return ResultData.getInstance(username);
 			}
 		} catch (Exception e) {

@@ -1,1 +1,1 @@
-com.sf.ftp.server.FtpServerApiImpl
+com.sf.ftp.server.core.SfFtpServerApi

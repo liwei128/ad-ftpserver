@@ -140,6 +140,7 @@ public class FtpManageServiceImpl implements FtpManageService{
 			return ResultData.getInstance(BaseRetCode.PARAM_MISSING);
 		}
 		checkHomedirectory(ftpUserEntity);
+		ftpUserEntity.setCurrentLoginNumber(null);
 		if(!checkPermission(ftpUserEntity)) {
 			return ResultData.getInstance(BaseRetCode.PERMISSION_FAILD);
 		}

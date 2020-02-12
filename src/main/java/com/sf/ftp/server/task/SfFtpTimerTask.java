@@ -18,9 +18,9 @@ import com.sf.ftp.server.dao.FtpRecordDao;
  * @author abner.li
  * @date 2020年1月30日下午5:59:21
  */
-public class DefaultFtpTimerTask implements FtpTimerTask {
+public class SfFtpTimerTask implements FtpTimerTask {
 	
-	private static final Logger logger = LoggerFactory.getLogger(DefaultFtpTimerTask.class);
+	private static final Logger logger = LoggerFactory.getLogger(SfFtpTimerTask.class);
 	
 	private SystemConfig systemConfig;
 
@@ -28,7 +28,7 @@ public class DefaultFtpTimerTask implements FtpTimerTask {
 	
 	private FtpStatistics ftpStatistics;
 
-	public DefaultFtpTimerTask(SystemConfig systemConfig, FtpRecordDao ftpRecordDao,FtpStatistics ftpStatistics) {
+	public SfFtpTimerTask(SystemConfig systemConfig, FtpRecordDao ftpRecordDao,FtpStatistics ftpStatistics) {
 		this.systemConfig = systemConfig;
 		this.ftpRecordDao = ftpRecordDao;
 		this.ftpStatistics = ftpStatistics;

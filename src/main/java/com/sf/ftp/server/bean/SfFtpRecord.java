@@ -17,7 +17,7 @@ import com.google.common.collect.Maps;
  * @author abner.li
  * @date 2020年1月29日下午10:48:48
  */
-public class FtpRecord {
+public class SfFtpRecord {
 	/**
 	 * 用户工号
 	 */
@@ -54,7 +54,7 @@ public class FtpRecord {
 		 */
 		LOGIN("登录"){
 			@Override
-			public FtpRecord builder(FtpSession session, FtpRequest request) throws FtpException{
+			public SfFtpRecord builder(FtpSession session, FtpRequest request) throws FtpException{
 				return super.builderIgnoreArgument(session, request);
 			}
 		},
@@ -63,7 +63,7 @@ public class FtpRecord {
 		 */
 		ACCESS("访问目录"){
 			@Override
-			public FtpRecord builder(FtpSession session, FtpRequest request) throws FtpException{
+			public SfFtpRecord builder(FtpSession session, FtpRequest request) throws FtpException{
 				return super.builderIgnoreArgument(session, request);
 			}
 		},
@@ -94,13 +94,13 @@ public class FtpRecord {
 		
 		private String info;
 		
-		public FtpRecord builder(FtpSession session, FtpRequest request) throws FtpException {
-			FtpRecord record = builderIgnoreArgument(session,request);
+		public SfFtpRecord builder(FtpSession session, FtpRequest request) throws FtpException {
+			SfFtpRecord record = builderIgnoreArgument(session,request);
 			record.setFilePath(record.getFilePath()+"/"+request.getArgument());
 			return record;
 		};
 		
-		protected FtpRecord builderIgnoreArgument(FtpSession session, FtpRequest request) throws FtpException {
+		protected SfFtpRecord builderIgnoreArgument(FtpSession session, FtpRequest request) throws FtpException {
 			User user = session.getUser();
 			String username = "";
 			if(user instanceof SfAdUser) {
@@ -108,7 +108,7 @@ public class FtpRecord {
 			}
 			String ip = session.getClientAddress().getAddress().getHostAddress();
 			String filePath = user.getHomeDirectory()+session.getFileSystemView().getWorkingDirectory().getAbsolutePath();
-			return new FtpRecord(user.getName(),username, ip, this,filePath);
+			return new SfFtpRecord(user.getName(),username, ip, this,filePath);
 		};
 		
 		public String getInfo() {
@@ -169,7 +169,7 @@ public class FtpRecord {
 	}
 
 
-	public FtpRecord(String userid, String username, String ip, Operation operation, String filePath) {
+	public SfFtpRecord(String userid, String username, String ip, Operation operation, String filePath) {
 		super();
 		this.userid = userid;
 		this.username = username;

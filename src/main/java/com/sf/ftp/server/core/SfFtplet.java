@@ -13,8 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.sf.ftp.common.Permission;
-import com.sf.ftp.server.bean.FtpRecord;
-import com.sf.ftp.server.bean.FtpRecord.Operation;
+import com.sf.ftp.server.bean.SfFtpRecord;
+import com.sf.ftp.server.bean.SfFtpRecord.Operation;
 import com.sf.ftp.server.bean.SfAdUser;
 import com.sf.ftp.server.dao.FtpRecordDao;
 
@@ -55,7 +55,7 @@ public class SfFtplet extends DefaultFtplet{
 		 * 访问目录
 		 */
 		if(PWD.equals(command)) {
-			FtpRecord ftpRecord = Operation.ACCESS.builder(session, request);
+			SfFtpRecord ftpRecord = Operation.ACCESS.builder(session, request);
 			ftpRecordDao.saveRecord(ftpRecord);
 		}
 		return super.beforeCommand(session, request);
@@ -67,7 +67,7 @@ public class SfFtplet extends DefaultFtplet{
 	@Override
 	public FtpletResult onLogin(FtpSession session, FtpRequest request) throws FtpException, IOException {
 		if(session.isLoggedIn()) {
-			FtpRecord ftpRecord = Operation.LOGIN.builder(session, request);
+			SfFtpRecord ftpRecord = Operation.LOGIN.builder(session, request);
 			ftpRecordDao.saveRecord(ftpRecord);
 		}
 		return super.onLogin(session, request);
@@ -81,7 +81,7 @@ public class SfFtplet extends DefaultFtplet{
 		if(!checkPermission(session,Permission.DELETE)) {
 			return FtpletResult.SKIP;
 		}
-		FtpRecord ftpRecord = Operation.DELETE.builder(session, request);
+		SfFtpRecord ftpRecord = Operation.DELETE.builder(session, request);
 		ftpRecordDao.saveRecord(ftpRecord);
 		return super.onDeleteEnd(session, request);
 	}
@@ -94,7 +94,7 @@ public class SfFtplet extends DefaultFtplet{
 		if(!checkPermission(session,Permission.UPLOAD)) {
 			return FtpletResult.SKIP;
 		}
-		FtpRecord ftpRecord = Operation.UPLOAD.builder(session, request);
+		SfFtpRecord ftpRecord = Operation.UPLOAD.builder(session, request);
 		ftpRecordDao.saveRecord(ftpRecord);
 		return super.onUploadStart(session, request);
 	}
@@ -107,7 +107,7 @@ public class SfFtplet extends DefaultFtplet{
 		if(!checkPermission(session,Permission.DOWNLOAD)) {
 			return FtpletResult.SKIP;
 		}
-		FtpRecord ftpRecord = Operation.DOWNLOAD.builder(session, request);
+		SfFtpRecord ftpRecord = Operation.DOWNLOAD.builder(session, request);
 		ftpRecordDao.saveRecord(ftpRecord);
 		return super.onDownloadStart(session, request);
 	}
@@ -120,7 +120,7 @@ public class SfFtplet extends DefaultFtplet{
 		if(!checkPermission(session,Permission.DELETE)) {
 			return FtpletResult.SKIP;
 		}
-		FtpRecord ftpRecord = Operation.RMDIR.builder(session, request);
+		SfFtpRecord ftpRecord = Operation.RMDIR.builder(session, request);
 		ftpRecordDao.saveRecord(ftpRecord);
 		return super.onRmdirStart(session, request);
 	}
@@ -133,7 +133,7 @@ public class SfFtplet extends DefaultFtplet{
 		if(!checkPermission(session,Permission.UPLOAD)) {
 			return FtpletResult.SKIP;
 		}
-		FtpRecord ftpRecord = Operation.MKDIR.builder(session, request);
+		SfFtpRecord ftpRecord = Operation.MKDIR.builder(session, request);
 		ftpRecordDao.saveRecord(ftpRecord);
 		return super.onMkdirStart(session, request);
 	}
@@ -146,7 +146,7 @@ public class SfFtplet extends DefaultFtplet{
 		if(!checkPermission(session,Permission.UPLOAD)) {
 			return FtpletResult.SKIP;
 		}
-		FtpRecord ftpRecord = Operation.UPLOAD.builder(session, request);
+		SfFtpRecord ftpRecord = Operation.UPLOAD.builder(session, request);
 		ftpRecordDao.saveRecord(ftpRecord);
 		return super.onUploadUniqueStart(session, request);
 	}
@@ -160,7 +160,7 @@ public class SfFtplet extends DefaultFtplet{
 		if(!checkPermission(session,Permission.UPLOAD)) {
 			return FtpletResult.SKIP;
 		}
-		FtpRecord ftpRecord = Operation.UPLOAD.builder(session, request);
+		SfFtpRecord ftpRecord = Operation.UPLOAD.builder(session, request);
 		ftpRecordDao.saveRecord(ftpRecord);
 		return super.onUploadUniqueStart(session, request);
 	}
@@ -176,7 +176,7 @@ public class SfFtplet extends DefaultFtplet{
 		if(!checkPermission(session,Permission.MODIFY)) {
 			return FtpletResult.SKIP;
 		}
-		FtpRecord ftpRecord = Operation.RENAME.builder(session, request);
+		SfFtpRecord ftpRecord = Operation.RENAME.builder(session, request);
 		ftpRecordDao.saveRecord(ftpRecord);
 		return super.onRenameStart(session, request);
 	}

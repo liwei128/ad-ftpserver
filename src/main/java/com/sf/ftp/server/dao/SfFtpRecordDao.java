@@ -14,8 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Maps;
-import com.sf.ftp.server.bean.BaseFtpStatistics;
-import com.sf.ftp.server.bean.FtpRecord;
+import com.sf.ftp.server.bean.SfFtpStatistics;
+import com.sf.ftp.server.bean.SfFtpRecord;
 import com.sf.ftp.server.config.SystemConfig;
 
 /**
@@ -24,9 +24,9 @@ import com.sf.ftp.server.config.SystemConfig;
  * @author abner.li
  * @date 2020年1月29日下午10:46:55
  */
-public class DefaultFtpRecordDao implements FtpRecordDao {
+public class SfFtpRecordDao implements FtpRecordDao {
 
-	private final static Logger logger = LoggerFactory.getLogger(DefaultFtpRecordDao.class);
+	private final static Logger logger = LoggerFactory.getLogger(SfFtpRecordDao.class);
 
 	private DataSource dataSource;
 
@@ -49,7 +49,7 @@ public class DefaultFtpRecordDao implements FtpRecordDao {
 	private String updateStatisticsStmt = "update ftp_statistics set startTime='{startTime}',totalUploadNumber='{totalUploadNumber}',totalDownloadNumber='{totalDownloadNumber}',totalDeleteNumber='{totalDeleteNumber}',totalUploadSize='{totalUploadSize}',totalDownloadSize='{totalDownloadSize}',totalDirectoryCreated='{totalDirectoryCreated}',totalDirectoryRemoved='{totalDirectoryRemoved}',totalConnectionNumber='{totalConnectionNumber}',currentConnectionNumber='{currentConnectionNumber}',totalLoginNumber='{totalLoginNumber}',totalFailedLoginNumber='{totalFailedLoginNumber}',currentLoginNumber='{currentLoginNumber}',totalAnonymousLoginNumber='{totalAnonymousLoginNumber}',currentAnonymousLoginNumber='{currentAnonymousLoginNumber}' ";
 
 	
-	public DefaultFtpRecordDao(SystemConfig systemConfig) {
+	public SfFtpRecordDao(SystemConfig systemConfig) {
 		this.dataSource = systemConfig.getDataSource();
 		this.historyStatistics = loadHistoryStatistics();
 		resetUserLoginStatus();
@@ -66,7 +66,7 @@ public class DefaultFtpRecordDao implements FtpRecordDao {
 	}
 
 	@Override
-	public void saveRecord(FtpRecord ftpRecord) {
+	public void saveRecord(SfFtpRecord ftpRecord) {
 		try (Connection connection = createConnection(); Statement stmt = connection.createStatement();) {
 			String sql = StringUtils.replaceString(insertRecordStmt, ftpRecord.toSqlMap());
 			stmt.executeUpdate(sql);
@@ -95,7 +95,7 @@ public class DefaultFtpRecordDao implements FtpRecordDao {
 		FtpStatistics newStatistics = getFtpStatistics(ftpStatistics);
 		String sql = loadHistoryStatistics()==null?insertStatisticsStmt:updateStatisticsStmt;
 		try (Connection connection = createConnection(); Statement stmt = connection.createStatement();) {
-			Map<String,Object> map = BaseFtpStatistics.toSqlMap(newStatistics);
+			Map<String,Object> map = SfFtpStatistics.toSqlMap(newStatistics);
 			String executeSql = StringUtils.replaceString(sql, map);
 			stmt.executeUpdate(executeSql);
 		} catch (Exception e) {
@@ -105,7 +105,7 @@ public class DefaultFtpRecordDao implements FtpRecordDao {
 	
 	@Override
 	public FtpStatistics getFtpStatistics(FtpStatistics ftpStatistics) {
-		return BaseFtpStatistics.append(historyStatistics,ftpStatistics);
+		return SfFtpStatistics.append(historyStatistics,ftpStatistics);
 	}
 
 	@Override
@@ -137,7 +137,7 @@ public class DefaultFtpRecordDao implements FtpRecordDao {
 		try (Connection connection = createConnection();
 				Statement stmt = connection.createStatement();
 				ResultSet rs = stmt.executeQuery(loadHistoryStatisticsStmt);) {
-			return BaseFtpStatistics.createByResultSet(rs);
+			return SfFtpStatistics.createByResultSet(rs);
 		} catch (Exception e) {
 			logger.error("loadHistoryStatistics ", e);
 		}

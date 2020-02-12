@@ -17,7 +17,7 @@ import com.google.common.collect.Maps;
  * @author abner.li
  * @date 2020年1月31日上午10:12:49
  */
-public class BaseFtpStatistics implements FtpStatistics{
+public class SfFtpStatistics implements FtpStatistics{
 	
 	/**
 	 * 服务启动时间
@@ -268,7 +268,7 @@ public class BaseFtpStatistics implements FtpStatistics{
 		if (historyStatistics == null) {
 			return ftpStatistics;
 		}
-		BaseFtpStatistics newStatistics = new BaseFtpStatistics();
+		SfFtpStatistics newStatistics = new SfFtpStatistics();
 		newStatistics.setCurrentAnonymousLoginNumber(ftpStatistics.getCurrentAnonymousLoginNumber());
 		newStatistics.setCurrentConnectionNumber(ftpStatistics.getCurrentConnectionNumber());
 		newStatistics.setCurrentLoginNumber(ftpStatistics.getCurrentLoginNumber());
@@ -297,7 +297,7 @@ public class BaseFtpStatistics implements FtpStatistics{
 	 */
 	public static FtpStatistics createByResultSet(ResultSet rs) throws Exception {
 		while (rs.next()) {
-			BaseFtpStatistics ftpStatistics = new BaseFtpStatistics();
+			SfFtpStatistics ftpStatistics = new SfFtpStatistics();
 			ftpStatistics.setCurrentAnonymousLoginNumber(rs.getInt("currentAnonymousLoginNumber"));
 			ftpStatistics.setCurrentConnectionNumber(rs.getInt("currentConnectionNumber"));
 			ftpStatistics.setCurrentLoginNumber(rs.getInt("currentLoginNumber"));

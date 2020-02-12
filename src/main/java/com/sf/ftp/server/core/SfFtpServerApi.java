@@ -1,4 +1,4 @@
-package com.sf.ftp.server;
+package com.sf.ftp.server.core;
 
 import org.apache.ftpserver.ftplet.FtpStatistics;
 
@@ -10,7 +10,7 @@ import com.sf.ftp.server.dao.FtpRecordDao;
  * @author abner.li
  * @date 2020年2月7日上午10:49:06
  */
-public class FtpServerApiImpl implements FtpServerApi{
+public class SfFtpServerApi implements FtpServerApi{
 	
 	private static FtpRecordDao ftpRecordDao;
 	
@@ -19,8 +19,8 @@ public class FtpServerApiImpl implements FtpServerApi{
 	private static volatile boolean initFinish = false;
 	
 	public static void init(FtpRecordDao ftpRecordDao,FtpStatistics ftpStatistics) {
-		FtpServerApiImpl.ftpRecordDao = ftpRecordDao;
-		FtpServerApiImpl.ftpStatistics = ftpStatistics;
+		SfFtpServerApi.ftpRecordDao = ftpRecordDao;
+		SfFtpServerApi.ftpStatistics = ftpStatistics;
 		initFinish = true;
 	}
 

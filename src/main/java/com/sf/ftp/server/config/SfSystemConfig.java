@@ -21,9 +21,9 @@ import com.zaxxer.hikari.HikariDataSource;
  * @author abner.li
  * @date 2020年1月21日上午11:30:40
  */
-public class DefaultSystemConfig implements SystemConfig{
+public class SfSystemConfig implements SystemConfig{
 
-	private static final Logger logger = LoggerFactory.getLogger(DefaultSystemConfig.class);
+	private static final Logger logger = LoggerFactory.getLogger(SfSystemConfig.class);
 	
 	private final String configPath = "ftp.properties";
 	
@@ -37,7 +37,7 @@ public class DefaultSystemConfig implements SystemConfig{
 	
 	private ScheduledThreadPoolExecutor scheduledThreadPool;
 
-	public DefaultSystemConfig() {
+	public SfSystemConfig() {
 		this.properties = initProperties();
 		this.dataSource = initDataSource();
 		this.connectionConfig = initConnectionConfig();
@@ -46,7 +46,7 @@ public class DefaultSystemConfig implements SystemConfig{
 
 	private Properties initProperties() {
 		Properties newProperties = new Properties();
-		try (InputStream in = DefaultSystemConfig.class.getClassLoader().getResourceAsStream(configPath);) {
+		try (InputStream in = SfSystemConfig.class.getClassLoader().getResourceAsStream(configPath);) {
 			newProperties.load(in);
 		} catch (Exception e) {
 			logger.error("getProperties read exception", e);

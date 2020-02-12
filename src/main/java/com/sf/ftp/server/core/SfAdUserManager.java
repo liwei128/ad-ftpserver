@@ -33,6 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.sf.ftp.server.bean.SfAdUser;
 import com.sf.ftp.server.config.SystemConfig;
 
@@ -48,6 +49,8 @@ public class SfAdUserManager extends AbstractAdUserManager{
 	private final static String SIT = "sit";
 	
 	private final static String DEFAULT_PWD = "123";
+	
+	private final static String ANONYMOUS = "anonymous";
 
     private String insertUserStmt = "insert into ftp_user (userid,username,permission, homedirectory, enableflag, idletime, maxloginnumber, maxloginperip, downloadrate, uploadrate ) values ('{userid}','{username}','{permission}', '{homedirectory}', {enableflag}, '{idletime}', '{maxloginnumber}','{maxloginperip}', '{downloadrate}', '{uploadrate}')";
 
@@ -99,7 +102,7 @@ public class SfAdUserManager extends AbstractAdUserManager{
 	}
 
 	private String createSelectUserByNameSql(String userid) {
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = Maps.newHashMap();
         map.put(ATTR_LOGIN, escapeString(userid));
         return StringUtils.replaceString(selectUserStmt, map);
 	}
@@ -127,7 +130,7 @@ public class SfAdUserManager extends AbstractAdUserManager{
 		try (Connection connection = createConnection();
 				Statement stmt = connection.createStatement();) {
 			
-			HashMap<String, Object> map = new HashMap<String, Object>();
+			HashMap<String, Object> map = Maps.newHashMap();
 	        map.put(ATTR_LOGIN, escapeString(userid));
 	        String sql = StringUtils.replaceString(deleteUserStmt, map);
 	        stmt.executeUpdate(sql);
@@ -141,7 +144,7 @@ public class SfAdUserManager extends AbstractAdUserManager{
 
 		try (Connection connection = createConnection();
 				Statement stmt = connection.createStatement();) {
-			HashMap<String, Object> map = new HashMap<String, Object>();
+			HashMap<String, Object> map = Maps.newHashMap();
 	        map.put(ATTR_LOGIN, escapeString(user.getName()));
 	        String home = user.getHomeDirectory() == null ? "/":user.getHomeDirectory();
             map.put(ATTR_HOME, escapeString(home));
@@ -211,8 +214,8 @@ public class SfAdUserManager extends AbstractAdUserManager{
             }
             return adUser;
         } else if (authentication instanceof AnonymousAuthentication) {
-        	if (doesExist("anonymous")) {
-                return getUserByName("anonymous");
+        	if (doesExist(ANONYMOUS)) {
+                return getUserByName(ANONYMOUS);
         	} 
         	throw new AuthenticationFailedException("Authentication failed");
         } else {

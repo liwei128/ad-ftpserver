@@ -1,69 +1,48 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="zh-CN">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>FTP软件后台登录</title>
-<link rel="stylesheet" type="text/css" href="/static/login.css">
-<link rel="shortcut icon" href="/static/favicon.ico">
-<script src="/static/plugin/jquery.min.js"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>FTP • 登录</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/static/plugin/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="/static/plugin/util.css">
+    <link rel="stylesheet" type="text/css" href="/static/login.css">
 </head>
-
 <body>
-	<img class="bgone" src="/static/img/1.jpg">
-	<img class="pic" src="/static/img/a.png">
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+                <div class="login100-form-title" style="background-image: url(/static/img/bg-01.jpg);">
+                    <span class="login100-form-title-1">FTP • 登录</span>
+                </div>
 
-	<div class="table">
-		<div class="wel">FTP 软 件 后 台 登 录</div>
-		<div class="wel1">LOGIN THE BACKGROUND OF FTP</div>
-		<div class="user">
-			<div id="yonghu" style="">
-				<img src="/static/img/yhm.png">
-			</div>
-			<input type="text" name="userid" placeholder="账号">
-		</div>
-		<div class="password">
-			<div id="yonghu">
-				<img src="/static/img/mm.png">
-			</div>
-			<input type="password" name="password" placeholder="●●●●●●">
-			<span class="warn"></span>
-		</div>
-		<input class="btn" type="button" value="登录">
-	</div>
-</body>
-<script>
-$(function(){ 
+                <form class="login100-form validate-form">
+                    <div class="wrap-input100 validate-input m-b-26" data-validate="账号不能为空">
+                        <span class="label-input100">账号</span>
+                        <input class="input100" type="text" name="username" placeholder="请输入账号">
+                    </div>
 
-	$(".btn").click(function(){
-		var userid =$("input[name='userid']").val();
-		var password =$("input[name='password']").val();
-		$.ajax({
-			type: "POST",
-			url: "/doLogin",
-			dataType: "json",
-			data: {
-				username:userid,
-				password:password
-			},
-			xhrFields: {
-				withCredentials: true
-			},
-			success: function (data) {
-				if (data.code == 0) {
-					location.reload();
-				}else {
-					$(".warn").html(data.msg);
-				}
-			}
-		});
-	});
-	
-	$("input[name='password']").keydown(function(e){
-		if (e.keyCode == 13) {  
-			$(".btn").click();
-     	} 
-	});
-});
+                    <div class="wrap-input100 validate-input m-b-18" data-validate="密码不能为空">
+                        <span class="label-input100">密码</span>
+                        <input class="input100" type="password" name="pass" placeholder="●●●●●●●●">
+                    </div>
 
-</script>
-</html>
+                    <div class="flex-sb-m w-full p-b-30 ">
+                    	<span class="warn" style="visibility: hidden;">&nbsp;</span>
+                    </div>
+
+                    <div class="container-login100-form-btn">
+                        <button class="login100-form-btn">登 录</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/plugin/jquery.min.js"></script>
+    <script src="/static/login.js"></script>
+
+
+</body></html>

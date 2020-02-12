@@ -14,17 +14,17 @@ FtpManage.initColumn = function () {
 			{field: 'selectItem', radio: true},
             {title: '工号', field: 'userid', visible: true, align: 'center', valign: 'middle'},
             {title: '用户名', field: 'username', visible: true, align: 'center', valign: 'middle'},
-            {title: '主目录', field: 'homedirectory', visible: true, align: 'center', valign: 'middle'},
             {title: '启用', field: 'enableflag', visible: true, align: 'center', valign: 'middle',formatter:FtpManage.statusView},
-            {title: '最大空闲时间(秒)', field: 'idletime', visible: true, align: 'center', valign: 'middle'},
-            {title: '访问权限', field: 'permission', visible: true, align: 'center', valign: 'middle' },
             {title: '管理员权限', field: 'adminpermission', visible: true, align: 'center', valign: 'middle',formatter:FtpManage.adminpermissionView},
+            {title: '主目录', field: 'homedirectory', visible: true, align: 'center', valign: 'middle'},
+            {title: '访问权限', field: 'permission', visible: true, align: 'center', valign: 'middle' },
+            {title: '最大空闲时间(秒)', field: 'idletime', visible: true, align: 'center', valign: 'middle'},
             {title: '最大的登录限制', field: 'maxloginnumber', visible: true, align: 'center', valign: 'middle'},
             {title: '同ip最大登录限制', field: 'maxloginperip', visible: true, align: 'center', valign: 'middle'},
             {title: '下载速率(byte)', field: 'downloadrate', visible: true, align: 'center', valign: 'middle'},
             {title: '上传速率(byte)', field: 'uploadrate', visible: true, align: 'center', valign: 'middle'},
-            {title: '当前连接', field: 'currentLoginNumber', visible: true, align: 'center', valign: 'middle',formatter:FtpManage.currentLoginView},
-            {title: '有效期', field: 'expires', visible: true, align: 'center', valign: 'middle'}
+            {title: '有效期', field: 'expires', visible: true, align: 'center', valign: 'middle'},
+            {title: '当前连接', field: 'currentLoginNumber', visible: true, align: 'center', valign: 'middle',formatter:FtpManage.currentLoginView}
     ];
 };
 

@@ -1,5 +1,6 @@
 package com.sf.ftp.server.core;
 
+import org.apache.ftpserver.DataConnectionConfigurationFactory;
 import org.apache.ftpserver.FtpServer;
 import org.apache.ftpserver.filesystem.nativefs.NativeFileSystemFactory;
 import org.apache.ftpserver.ftplet.FileSystemFactory;
@@ -70,7 +71,14 @@ public class SfFtpServerFactory {
 	private Listener defaultListener() {
 		ListenerFactory listenerFactory = new ListenerFactory();
 		int port = Integer.parseInt(systemConfig.getProperty(SystemConfig.PORT));
+		int activePort = Integer.parseInt(systemConfig.getProperty(SystemConfig.ACTIVE_PORT));
+		String passivePort = systemConfig.getProperty(SystemConfig.PASSIVE_PORT);
 		listenerFactory.setPort(port);
+		
+		DataConnectionConfigurationFactory configurationFactory = new DataConnectionConfigurationFactory();
+		configurationFactory.setActiveLocalPort(activePort);
+		configurationFactory.setPassivePorts(passivePort);
+		listenerFactory.setDataConnectionConfiguration(configurationFactory.createDataConnectionConfiguration());
 		return listenerFactory.createListener();
 	}
 

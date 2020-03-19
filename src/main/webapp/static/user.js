@@ -12,8 +12,9 @@ var FtpManage = {
 FtpManage.initColumn = function () {
     return [
 			{field: 'selectItem', radio: true},
-            {title: '工号', field: 'userid', visible: true, align: 'center', valign: 'middle'},
-            {title: '用户名', field: 'username', visible: true, align: 'center', valign: 'middle'},
+            {title: '账号', field: 'userid', visible: true, align: 'center', valign: 'middle'},
+            {title: '账号类型', field: 'usertype', visible: true, align: 'center', valign: 'middle',formatter:FtpManage.typeView},
+            {title: '邮箱', field: 'email', visible: true, align: 'center', valign: 'middle'},
             {title: '启用', field: 'enableflag', visible: true, align: 'center', valign: 'middle',formatter:FtpManage.statusView},
             {title: '管理员权限', field: 'adminpermission', visible: true, align: 'center', valign: 'middle',formatter:FtpManage.adminpermissionView},
             {title: '主目录', field: 'homedirectory', visible: true, align: 'center', valign: 'middle'},
@@ -24,12 +25,19 @@ FtpManage.initColumn = function () {
             {title: '下载速率(byte)', field: 'downloadrate', visible: true, align: 'center', valign: 'middle'},
             {title: '上传速率(byte)', field: 'uploadrate', visible: true, align: 'center', valign: 'middle'},
             {title: '有效期', field: 'expires', visible: true, align: 'center', valign: 'middle'},
-            {title: '当前连接', field: 'currentLoginNumber', visible: true, align: 'center', valign: 'middle',formatter:FtpManage.currentLoginView}
+            {title: '最后操作人', field: 'handler', visible: false, align: 'center', valign: 'middle'},
+            {title: '创建时间', field: 'createTime', visible: false, align: 'center', valign: 'middle'},
+            {title: '当前连接', field: 'currentLoginNumber', visible: true, align: 'center', valign: 'middle',formatter:FtpManage.currentLoginView},
+            {title: '操作', field: 'usertype', visible: true, align: 'center', valign: 'middle',formatter:FtpManage.pwdView}
     ];
 };
 
 FtpManage.statusView = function(value, row, index){
 	return value?"是":"否";
+}
+
+FtpManage.typeView = function(value, row, index){
+	return value=='AD'?"域账号":"外部账号";
 }
 FtpManage.adminpermissionView = function(value, row, index){
 	return value?"是":"否";
@@ -42,7 +50,29 @@ FtpManage.currentLoginView = function(value, row, index){
 		return "离线";
 	}
 }
-
+FtpManage.pwdView = function(value, row, index){
+	if(value=="USER"){		
+		return '<a href = "javascript:void(0);" onclick = FtpManage.retPwd("'+row.userid+'")>重置密码</a>';
+	}
+	return "";
+}
+FtpManage.retPwd = function(userid){
+	var ajax = new $ax(Feng.ctxPath + "/user/retPwd", function (data) {
+		if(data.code==0){
+			Feng.success("用户"+userid+"密码重置成功，已发送至用户邮箱。");
+			FtpManage.table.refresh();
+		}else if(data.code==2){
+			location.reload();
+		}else{
+			Feng.error(data.msg);
+		}
+	}, function (data) {
+		Feng.error("密码重置失败!");
+	});
+	ajax.set("userid",userid);
+	ajax.start();
+	
+}
 
 FtpManage.switcherView = function(path){
 	var ajax = new $ax(Feng.ctxPath + "/switcherView", function (data) {
@@ -108,6 +138,7 @@ FtpManage.export = function () {
 	var url = Feng.ctxPath+"/user/export?";
 	url+="userid="+$("#userid").val();
 	url+="&enableflag="+$("#enableflag").val();
+	url+="&usertype="+$("#usertype").val();
 	url+="&onLine="+$("#onLine").val();
 	url+="&adminpermission="+$("#adminpermission").val();
 	window.location.href = Feng.ctxPath+url;
@@ -152,6 +183,7 @@ FtpManage.search = function () {
 	var queryData = {};
 	queryData.userid=$("#userid").val();
 	queryData.enableflag=$("#enableflag").val();
+	queryData.usertype=$("#usertype").val();
 	queryData.onLine=$("#onLine").val();
 	queryData.adminpermission=$("#adminpermission").val();
     FtpManage.table.refresh({query: queryData});
@@ -161,6 +193,7 @@ FtpManage.reset = function(){
 	$("#enableflag").val("");
 	$("#onLine").val("");
 	$("#adminpermission").val("");
+	$("#usertype").val("");
 	FtpManage.search();
 };
 FtpManage.onChangeStatus = function(){

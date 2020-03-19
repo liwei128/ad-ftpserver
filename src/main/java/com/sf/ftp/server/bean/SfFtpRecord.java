@@ -24,11 +24,6 @@ public class SfFtpRecord {
 	private String userid;
 	
 	/**
-	 * 用户名
-	 */
-	private String username;
-	
-	/**
 	 * 用户ip
 	 */
 	private String ip;
@@ -102,13 +97,9 @@ public class SfFtpRecord {
 		
 		protected SfFtpRecord builderIgnoreArgument(FtpSession session, FtpRequest request) throws FtpException {
 			User user = session.getUser();
-			String username = "";
-			if(user instanceof SfAdUser) {
-				username = ((SfAdUser)user).getUser();
-			}
 			String ip = session.getClientAddress().getAddress().getHostAddress();
 			String filePath = user.getHomeDirectory()+session.getFileSystemView().getWorkingDirectory().getAbsolutePath();
-			return new SfFtpRecord(user.getName(),username, ip, this,filePath);
+			return new SfFtpRecord(user.getName(), ip, this,filePath);
 		};
 		
 		public String getInfo() {
@@ -159,20 +150,11 @@ public class SfFtpRecord {
 		this.ip = ip;
 	}
 	
-	public String getUsername() {
-		return username;
-	}
 
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-
-	public SfFtpRecord(String userid, String username, String ip, Operation operation, String filePath) {
+	public SfFtpRecord(String userid, String ip, Operation operation, String filePath) {
 		super();
 		this.userid = userid;
-		this.username = username;
 		this.ip = ip;
 		this.operation = operation;
 		this.filePath = filePath.replaceAll("///", "/").replaceAll("//", "/");
@@ -182,7 +164,6 @@ public class SfFtpRecord {
 	public Map<String,Object> toSqlMap(){
 		Map<String, Object> map = Maps.newHashMap();
 		map.put("userid", userid);
-		map.put("username", username);
 		map.put("ip", ip);
 		map.put("operation", operation.getInfo());
 		map.put("filepath", filePath);

@@ -112,6 +112,18 @@ public class FtpManageController {
 	}
 	
 	/**
+	 * 重置密码
+	 * @param userid
+	 * @return
+	 * ResultData<Void>
+	 */
+	@ResponseBody
+	@RequestMapping("/user/retPwd")
+	public ResultData<Void> retPwd(String userid){
+		return ftpManageService.retPwd(userid);
+	}
+	
+	/**
 	 * 修改用户
 	 * @param ftpUserEntity
 	 * @return
@@ -120,6 +132,7 @@ public class FtpManageController {
 	@ResponseBody
 	@RequestMapping("/user/doModify")
 	public ResultData<Void> doModify(FtpUserEntity ftpUserEntity){
+		ftpUserEntity.setHandler(ControllerUtil.getUser().getUserid());
 		return ftpManageService.modify(ftpUserEntity);
 	}
 	
@@ -146,6 +159,7 @@ public class FtpManageController {
 	@ResponseBody
 	@RequestMapping("/user/doAdd")
 	public ResultData<Void> doAdd(FtpUserEntity ftpUserEntity){
+		ftpUserEntity.setHandler(ControllerUtil.getUser().getUserid());
 		return ftpManageService.add(ftpUserEntity);
 	}
 	

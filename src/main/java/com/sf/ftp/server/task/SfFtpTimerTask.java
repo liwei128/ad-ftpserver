@@ -52,7 +52,6 @@ public class SfFtpTimerTask implements FtpTimerTask {
 		systemConfig.getScheduledThreadPool().scheduleAtFixedRate(() -> {
 			try {
 				ftpRecordDao.disabledUserByDate(formatTimeByDay(0));
-				ftpRecordDao.deleteUserByDate(formatTimeByDay(-7));
 			}catch (Exception e) {
 				logger.error("timerCleanExpiresUser exception",e);
 			}

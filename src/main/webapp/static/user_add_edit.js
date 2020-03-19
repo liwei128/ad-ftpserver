@@ -47,6 +47,8 @@ FtpUserInfoDlg.close = function() {
 FtpUserInfoDlg.collectData = function() {
     this
     .set('userid')
+    .set('usertype')
+    .set('email')
     .set('homedirectory')
     .set('enableflag')
     .set('idletime')

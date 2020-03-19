@@ -14,6 +14,7 @@ import org.apache.ftpserver.ftplet.User;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Sets;
 import com.sf.ftp.common.Permission;
+import com.sf.ftp.common.UserType;
 
 
 /**
@@ -23,10 +24,12 @@ import com.sf.ftp.common.Permission;
  * @date 2020年2月10日下午5:43:01
  */
 public class SfAdUser implements User {
-	
+    
     private String name;
     
-    private String user;
+    private UserType usertype;
+    
+    private String password;
 
     private int maxIdleTime;
 
@@ -71,16 +74,24 @@ public class SfAdUser implements User {
 		return name;
 	}
 
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
+	public UserType getUsertype() {
+		return usertype;
+	}
+	public void setUsertype(UserType usertype) {
+		this.usertype = usertype;
+	}
 	@Override
 	public String getPassword() {
-		return null;
+		return password;
 	}
 
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	@Override
 	public int getMaxIdleTime() {
 		return maxIdleTime;
@@ -107,14 +118,6 @@ public class SfAdUser implements User {
 	@Override
 	public boolean getEnabled() {
 		return enabled;
-	}
-
-	public String getUser() {
-		return user;
-	}
-
-	public void setUser(String user) {
-		this.user = user;
 	}
 
 	public void setEnabled(boolean enabled) {

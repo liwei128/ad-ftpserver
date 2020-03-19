@@ -13,11 +13,12 @@ import org.apache.ftpserver.ConnectionConfig;
  */
 public interface SystemConfig {
 	
-	public String PROFILES = "profiles";
 	public String FTP_PATH = "ftpPath";
 	public String LDAP_URL = "ldapUrl";
 	public String AD_PREFIX = "adPrefix";
 	public String PORT = "port";
+	public String ACTIVE_PORT = "activeport";
+	public String PASSIVE_PORT = "passiveport";
 	
 	/**
 	 * 获取数据源

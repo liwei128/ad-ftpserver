@@ -15,7 +15,6 @@ public interface FtpTimerTask {
 	/**
 	 * 定期清理过期用户
 	 * -过期禁用账号
-	 * -过期超过7天删除账号
 	 */
 	public void timerCleanExpiresUser();
 

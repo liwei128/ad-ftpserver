@@ -24,9 +24,7 @@ import org.apache.ftpserver.ftplet.User;
 import org.apache.ftpserver.usermanager.AnonymousAuthentication;
 import org.apache.ftpserver.usermanager.UsernamePasswordAuthentication;
 import org.apache.ftpserver.usermanager.impl.ConcurrentLoginPermission;
-import org.apache.ftpserver.usermanager.impl.ConcurrentLoginRequest;
 import org.apache.ftpserver.usermanager.impl.TransferRatePermission;
-import org.apache.ftpserver.usermanager.impl.TransferRateRequest;
 import org.apache.ftpserver.usermanager.impl.WritePermission;
 import org.apache.ftpserver.util.StringUtils;
 import org.slf4j.Logger;
@@ -34,6 +32,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.sf.ftp.common.UserType;
 import com.sf.ftp.server.bean.SfAdUser;
 import com.sf.ftp.server.config.SystemConfig;
 
@@ -46,15 +45,7 @@ public class SfAdUserManager extends AbstractAdUserManager{
 
 	private final Logger logger = LoggerFactory.getLogger(SfAdUserManager.class);
 	
-	private final static String SIT = "sit";
-	
-	private final static String DEFAULT_PWD = "123";
-	
 	private final static String ANONYMOUS = "anonymous";
-
-    private String insertUserStmt = "insert into ftp_user (userid,username,permission, homedirectory, enableflag, idletime, maxloginnumber, maxloginperip, downloadrate, uploadrate ) values ('{userid}','{username}','{permission}', '{homedirectory}', {enableflag}, '{idletime}', '{maxloginnumber}','{maxloginperip}', '{downloadrate}', '{uploadrate}')";
-
-    private String updateUserStmt = "update ftp_user set username = '{username}',permission = '{permission}',homedirectory = '{homedirectory}',enableflag = {enableflag},idletime = '{idletime}', maxloginnumber = '{maxloginnumber}',maxloginperip = '{maxloginperip}',downloadrate = '{downloadrate}',uploadrate = '{uploadrate}' where userid = '{userid}' ";;
 
     private String deleteUserStmt = "delete from ftp_user where userid = '{userid}'";
 
@@ -71,7 +62,7 @@ public class SfAdUserManager extends AbstractAdUserManager{
 		this.dataSource = systemConfig.getDataSource();
 		this.systemConfig = systemConfig;
 		String ftpPath = systemConfig.getProperty(SystemConfig.FTP_PATH);
-		this.selectUserStmt = "select userid,username,permission,REPLACE(CONCAT('"+ftpPath+"',homedirectory),'//','/') as 'homedirectory',enableflag,idletime,maxloginnumber,maxloginperip,downloadrate,uploadrate  from ftp_user where userid = '{userid}' ";
+		this.selectUserStmt = "select userid,usertype,password,permission,REPLACE(CONCAT('"+ftpPath+"',homedirectory),'//','/') as 'homedirectory',enableflag,idletime,maxloginnumber,maxloginperip,downloadrate,uploadrate  from ftp_user where userid = '{userid}' ";
 	}
 
 	@Override
@@ -82,7 +73,8 @@ public class SfAdUserManager extends AbstractAdUserManager{
 	 		if (rs.next()) {
                 SfAdUser user = new SfAdUser();
                 user.setName(rs.getString(ATTR_LOGIN));
-                user.setUser(rs.getString(ATTR_USERNAME));
+                user.setUsertype(UserType.valueOf(rs.getString(ATTR_USER_TYPE)));
+                user.setPassword(rs.getString(ATTR_PWD));
                 user.setHomeDirectory(rs.getString(ATTR_HOME));
                 user.setEnabled(rs.getBoolean(ATTR_ENABLE));
                 user.setMaxIdleTime(rs.getInt(ATTR_MAX_IDLE_TIME));
@@ -141,49 +133,7 @@ public class SfAdUserManager extends AbstractAdUserManager{
 
 	@Override
 	public void save(User user) throws FtpException {
-
-		try (Connection connection = createConnection();
-				Statement stmt = connection.createStatement();) {
-			HashMap<String, Object> map = Maps.newHashMap();
-	        map.put(ATTR_LOGIN, escapeString(user.getName()));
-	        String home = user.getHomeDirectory() == null ? "/":user.getHomeDirectory();
-            map.put(ATTR_HOME, escapeString(home));
-            map.put(ATTR_ENABLE, String.valueOf(user.getEnabled()));
-            map.put(ATTR_MAX_IDLE_TIME, user.getMaxIdleTime());
-            
-            TransferRateRequest transferRateRequest = new TransferRateRequest();
-            transferRateRequest = (TransferRateRequest) user.authorize(transferRateRequest);
-            if (transferRateRequest != null) {
-                map.put(ATTR_MAX_UPLOAD_RATE, transferRateRequest.getMaxUploadRate());
-                map.put(ATTR_MAX_DOWNLOAD_RATE, transferRateRequest.getMaxDownloadRate());
-            } else {
-                map.put(ATTR_MAX_UPLOAD_RATE, 0);
-                map.put(ATTR_MAX_DOWNLOAD_RATE, 0);
-            }
-            ConcurrentLoginRequest concurrentLoginRequest = new ConcurrentLoginRequest(0, 0);
-            concurrentLoginRequest = (ConcurrentLoginRequest) user.authorize(concurrentLoginRequest);
-            if (concurrentLoginRequest != null) {
-                map.put(ATTR_MAX_LOGIN_NUMBER, concurrentLoginRequest.getMaxConcurrentLogins());
-                map.put(ATTR_MAX_LOGIN_PER_IP, concurrentLoginRequest.getMaxConcurrentLoginsPerIP());
-            } else {
-                map.put(ATTR_MAX_LOGIN_NUMBER, 0);
-                map.put(ATTR_MAX_LOGIN_PER_IP, 0);
-            }
-            if(user instanceof SfAdUser) {
-            	SfAdUser sfAdUser = (SfAdUser) user;
-            	map.put(ATTR_USERNAME, sfAdUser.getUser());
-            	map.put(ATTR_PERM, sfAdUser.getPermissionsString());
-            }
-            String sql = null;
-            if (!doesExist(user.getName())) {
-                sql = StringUtils.replaceString(insertUserStmt, map);
-            } else {
-                sql = StringUtils.replaceString(updateUserStmt, map);
-            }
-	        stmt.executeUpdate(sql);
-		} catch (Exception e) {
-			logger.error("save ",e);
-		}
+		throw new FtpException("not impl saveUser");
 		
 	}
 
@@ -209,7 +159,7 @@ public class SfAdUserManager extends AbstractAdUserManager{
                 throw new AuthenticationFailedException("Authentication failed");
             }
             User adUser = getUserByName(user);
-            if(adUser==null||!adCheck(user,password)) {
+            if(adUser==null||!pwdCheck(adUser,password)) {
             	throw new AuthenticationFailedException("Authentication failed");
             }
             return adUser;
@@ -224,6 +174,17 @@ public class SfAdUserManager extends AbstractAdUserManager{
         }
 	}
 	
+	private boolean pwdCheck(User user, String password) {
+		if(user instanceof SfAdUser) {
+			SfAdUser adUser = (SfAdUser) user;
+			if(adUser.getUsertype()==UserType.AD) {
+				return adCheck(adUser.getName(),password);
+			}
+			return adUser.getPassword().equals(password);
+		}
+		return false;
+	}
+
 	private Connection createConnection() throws SQLException {
         Connection connection = dataSource.getConnection();
         connection.setAutoCommit(true);
@@ -233,9 +194,6 @@ public class SfAdUserManager extends AbstractAdUserManager{
 	@Override
 	public boolean adCheck(String userId, String password) {
 		
-		if (SIT.equals(systemConfig.getProperty(SystemConfig.PROFILES))) {
-			return DEFAULT_PWD.equals(password);
-		}
 		DirContext dc = null;
 		try {
 			dc = createUserDc(userId, password);

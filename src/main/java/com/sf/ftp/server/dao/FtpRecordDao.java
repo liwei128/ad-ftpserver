@@ -50,10 +50,4 @@ public interface FtpRecordDao {
 	 */
 	public void disabledUserByDate(String expiresDate);
 
-	/**
-	 * 根据时间删除用户
-	 * @param expiresDate yyyy-MM-dd
-	 */
-	public void deleteUserByDate(String expiresDate);
-
 }

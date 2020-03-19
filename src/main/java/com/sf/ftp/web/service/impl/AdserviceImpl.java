@@ -34,14 +34,9 @@ import com.sf.ftp.web.service.AdService;
 public class AdserviceImpl implements AdService{
 	
 	private final static Logger logger = LoggerFactory.getLogger(AdserviceImpl.class);
-	private final static String SIT = "sit";
-	private final static String DEFAULT_PWD = "123";
 	private final static String USERID = "sAMAccountName";
 	private final static String DIS_NAME = "distinguishedName";
 	private final static String USER_NAME = "sn";
-	
-	@Value("${profiles}")
-	private String profiles;
 	
 	@Value("${ldapUrl}")
 	private String ldapUrl;
@@ -63,9 +58,6 @@ public class AdserviceImpl implements AdService{
 	
 	@Override
 	public ResultData<String> isAdUser(String userid) {
-		if (SIT.equals(profiles)) {
-			return ResultData.getInstance("");
-		}
 		try {
 			Map<String, List<String>> info = queryInfo(USERID,userid,DIS_NAME,USER_NAME);
 			if(info.size()>0&&StringUtils.isNotEmpty(info.get(DIS_NAME).get(0))){
@@ -80,9 +72,6 @@ public class AdserviceImpl implements AdService{
 	
 	@Override
 	public boolean checkUser(String userid, String password) {
-		if (SIT.equals(profiles)) {
-			return DEFAULT_PWD.equals(password);
-		}
 		DirContext dc = null;
 		try {
 			dc = createUserDc(userid, password);

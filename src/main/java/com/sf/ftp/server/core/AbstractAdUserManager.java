@@ -12,7 +12,9 @@ public abstract class AbstractAdUserManager implements UserManager{
 	
     public static final String ATTR_LOGIN = "userid";
     
-    public static final String ATTR_USERNAME = "username";
+    public static final String ATTR_USER_TYPE = "usertype";
+    
+    public static final String ATTR_PWD = "password";
 
     public static final String ATTR_HOME = "homedirectory";
 

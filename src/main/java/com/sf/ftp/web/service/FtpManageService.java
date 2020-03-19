@@ -106,4 +106,12 @@ public interface FtpManageService {
 	 */
 	void exportLog(LogCondition condition) throws Exception ;
 
+	/**
+	 * 重置密码
+	 * @param userid
+	 * @return
+	 * ResultData<Void>
+	 */
+	ResultData<Void> retPwd(String userid);
+
 }

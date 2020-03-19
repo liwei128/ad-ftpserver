@@ -2,6 +2,7 @@ package com.sf.ftp.web.beans.po;
 
 
 import com.alibaba.fastjson.JSON;
+import com.sf.ftp.common.UserType;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
 
@@ -15,8 +16,13 @@ public class FtpUserEntity {
 	@Excel(name = "工号")
     private String userid;
 	
-	@Excel(name = "用户名")
-    private String username;
+	@Excel(name = "邮箱")
+    private String email;
+	
+	private String password;
+	
+	@Excel(name = "账号类型",replace= {"域账号_AD","外部账号_USER"})
+    private UserType usertype;
 
 	@Excel(name = "主目录")
     private String homedirectory;
@@ -49,6 +55,10 @@ public class FtpUserEntity {
 
 	@Excel(name = "有效期")
     private String expires;
+	
+    private String handler;
+    
+    private String createTime;
 	
 
     public String getUserid() {
@@ -147,19 +157,51 @@ public class FtpUserEntity {
         this.expires = expires;
     }
 
-	public String getUsername() {
-		return username;
+    
+
+	public String getEmail() {
+		return email;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public UserType getUsertype() {
+		return usertype;
+	}
+
+	public void setUsertype(UserType usertype) {
+		this.usertype = usertype;
 	}
 
 	@Override
 	public String toString() {
 		return JSON.toJSONString(this);
 	}
-    
-    
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getHandler() {
+		return handler;
+	}
+
+	public void setHandler(String handler) {
+		this.handler = handler;
+	}
+
+	public String getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(String createTime) {
+		this.createTime = createTime;
+	}
     
 }

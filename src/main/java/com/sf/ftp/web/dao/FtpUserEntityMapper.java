@@ -36,6 +36,14 @@ public interface FtpUserEntityMapper {
      * FtpUserEntity
      */
     FtpUserEntity selectByUserId(String userid);
+    
+    /**
+     * 查询
+     * @param userid
+     * @return
+     * FtpUserEntity
+     */
+    FtpUserEntity selectPwdByUserId(String userid);
 
     /**
      * 更新
@@ -69,4 +77,14 @@ public interface FtpUserEntityMapper {
 	 * List<FtpUserEntity>
 	 */
 	List<FtpUserEntity> queryAllByCondition(UserCondition condition);
+
+	/**
+	 * 查询即将失效的用户
+	 * @param expires
+	 * @return
+	 * List<FtpUserEntity>
+	 */
+	List<FtpUserEntity> queryExpiresUserByDate(String expires);
+
+	
 }

@@ -37,7 +37,7 @@
 				<div class="col-sm-12">
 					<div class="ibox float-e-margins">
 						<div class="ibox-title top-title">
-							<h5 class="active" onClick ="FtpManage.switcherView('user')">FTP用户管理</h5>
+							<h5 class="active" onClick ="FtpManage.switcherView('user')">用户管理</h5>
 							<h5 onClick ="FtpManage.switcherView('log')">文件访问记录</h5>
 							<h5 onClick ="FtpManage.switcherView('statistics')">系统信息</h5>
 							<div class="title-right">
@@ -60,6 +60,18 @@
 													<option></option>
 													<option value="true">是</option>
 													<option value="false">否</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-sm-2">
+											<div class="input-group">
+												<div class="input-group-btn">
+													<button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">账号类型</button>
+												</div>
+												<select class="form-control" id="usertype" onchange="FtpManage.onChangeStatus()">
+													<option></option>
+													<option value="AD">域账号</option>
+													<option value="USER">外部账号</option>
 												</select>
 											</div>
 										</div>
@@ -96,7 +108,7 @@
 												<input type="text" class="form-control" id="userid" placeholder="">
 											</div>
 										</div>
-										<div class="col-sm-3">
+										<div class="col-sm-2">
 
 											<button type="button" class="btn btn-primary " onclick="FtpManage.search()" id="">
 												<i class="fa fa-search"></i>&nbsp;搜索

@@ -3,7 +3,8 @@
 <mapper namespace="com.sf.ftp.web.dao.FtpUserEntityMapper">
   <resultMap id="BaseResultMap" type="com.sf.ftp.web.beans.po.FtpUserEntity">
     <id column="userid" jdbcType="VARCHAR" property="userid" />
-    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="usertype" jdbcType="VARCHAR" property="usertype" />
     <result column="homedirectory" jdbcType="VARCHAR" property="homedirectory" />
     <result column="enableflag" jdbcType="BIT" property="enableflag" />
     <result column="idletime" jdbcType="INTEGER" property="idletime" />
@@ -15,12 +16,27 @@
     <result column="uploadrate" jdbcType="INTEGER" property="uploadrate" />
     <result column="current_login_number" jdbcType="INTEGER" property="currentLoginNumber" />
     <result column="expires" jdbcType="VARCHAR" property="expires" />
+    <result column="handler" jdbcType="VARCHAR" property="handler" />
+    <result column="createTime" jdbcType="VARCHAR" property="createTime" />
   </resultMap>
   
+
+  
   <sql id="Base_Column_List">
-    userid,username, homedirectory, enableflag, idletime, permission, adminpermission, maxloginnumber, 
-    maxloginperip, downloadrate, uploadrate, current_login_number, expires
+    userid,email,usertype, homedirectory, enableflag, idletime, permission, adminpermission, maxloginnumber, 
+    maxloginperip, downloadrate, uploadrate, current_login_number, expires,handler,DATE_FORMAT(create_time,'%Y-%m-%d %T') as 'createTime'
   </sql>
+  
+  <resultMap id="PwdResultMap" type="com.sf.ftp.web.beans.po.FtpUserEntity" extends="BaseResultMap">
+    <result column="password" property="password" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Pwd_Column_List">
+    userid,password,email,usertype, homedirectory, enableflag, idletime, permission, adminpermission, maxloginnumber, 
+    maxloginperip, downloadrate, uploadrate, current_login_number, expires,handler,DATE_FORMAT(create_time,'%Y-%m-%d %T') as 'createTime'
+  </sql>
+  
+  
   
    <sql id="base_condition">
       <if test="userid != null and userid!=''">
@@ -31,6 +47,9 @@
       </if>
       <if test="adminpermission != null ">
         and adminpermission = #{adminpermission,jdbcType=BIT}
+      </if>
+      <if test="usertype != null">
+        and usertype = #{usertype,jdbcType=VARCHAR}
       </if>
       <if test="onLine != null and onLine">
         and current_login_number &gt; 0 
@@ -73,6 +92,24 @@
     where userid = #{userid,jdbcType=VARCHAR}
   </select>
   
+  <select id="queryExpiresUserByDate" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ftp_user
+    where expires = #{expires,jdbcType=VARCHAR}
+  </select>
+  
+  
+  
+  <select id="selectPwdByUserId" parameterType="java.lang.String" resultMap="PwdResultMap">
+    select 
+    <include refid="Pwd_Column_List" />
+    from ftp_user
+    where userid = #{userid,jdbcType=VARCHAR}
+  </select>
+  
+  
+  
   <delete id="deleteByUserId" parameterType="java.lang.String">
     delete from ftp_user
     where userid = #{userid,jdbcType=VARCHAR}
@@ -84,8 +121,14 @@
       <if test="userid != null">
         userid,
       </if>
-      <if test="username != null">
-        username,
+      <if test="usertype != null">
+        usertype,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="email != null">
+        email,
       </if>
       <if test="homedirectory != null">
         homedirectory,
@@ -117,13 +160,22 @@
       <if test="expires != null">
         expires,
       </if>
+      <if test="handler != null">
+        handler,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userid != null">
         #{userid,jdbcType=VARCHAR},
       </if>
-      <if test="username != null">
-        #{username,jdbcType=VARCHAR},
+      <if test="usertype != null">
+        #{usertype,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
       </if>
       <if test="homedirectory != null">
         #{homedirectory,jdbcType=VARCHAR},
@@ -155,14 +207,23 @@
       <if test="expires != null">
         #{expires,jdbcType=VARCHAR},
       </if>
+      <if test="handler != null">
+        #{handler,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   
   <update id="updateByUserId" parameterType="com.sf.ftp.web.beans.po.FtpUserEntity">
     update ftp_user
     <set>
-      <if test="username != null">
-        username = #{username,jdbcType=VARCHAR},
+      <if test="usertype != null">
+        usertype = #{usertype,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
       </if>
       <if test="homedirectory != null">
         homedirectory = #{homedirectory,jdbcType=VARCHAR},
@@ -193,6 +254,9 @@
       </if>
       <if test="expires != null">
         expires = #{expires,jdbcType=VARCHAR},
+      </if>
+      <if test="handler != null">
+        handler = #{handler,jdbcType=VARCHAR},
       </if>
     </set>
     where userid = #{userid,jdbcType=VARCHAR}

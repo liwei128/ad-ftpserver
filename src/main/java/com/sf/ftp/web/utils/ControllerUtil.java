@@ -19,6 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
+import com.sf.ftp.web.beans.UserConstant;
+import com.sf.ftp.web.beans.po.FtpUserEntity;
 
 /**
  * Controller工具
@@ -87,6 +89,11 @@ public class ControllerUtil {
 			res+="    导入失败："+(lists.size()-atomicInteger.get());
 		}
         return res;
+	}
+
+	public static FtpUserEntity getUser() {
+		Object user = getRequest().getSession().getAttribute(UserConstant.USER);
+		return (FtpUserEntity) user;
 	}
 
 

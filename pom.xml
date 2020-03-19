@@ -1,9 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.sf.ftp</groupId>
-  <artifactId>ad-ftpserver</artifactId>
+  <artifactId>ftpserver</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>ad-ftpserver</name>
+  <name>ftpserver</name>
   <description>ftp服务</description>
   	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -30,38 +30,6 @@
 			<activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-		</profile>
-		<profile>
-			<id>sit</id>
-			<build>
-				<resources>
-					<resource>
-		                <directory>src/main/webapp</directory>
-		            </resource>
-					<resource>
-						<directory>src/main/resources.sit</directory>
-					</resource>
-					<resource>
-						<directory>src/main/resources</directory>
-					</resource>
-				</resources>
-			</build>
-		</profile>
-		<profile>
-			<id>prod</id>
-			<build>
-				<resources>
-					<resource>
-		                <directory>src/main/webapp</directory>
-		            </resource>
-					<resource>
-						<directory>src/main/resources.prod</directory>
-					</resource>
-					<resource>
-						<directory>src/main/resources</directory>
-					</resource>
-				</resources>
-			</build>
 		</profile>
 	</profiles>
 	<!-- 区分环境打包  end-->
@@ -144,6 +112,11 @@
             <artifactId>easypoi-annotation</artifactId>
             <version>3.3.0</version>
         </dependency>
+        <dependency>
+		    <groupId>javax.mail</groupId>
+		    <artifactId>mail</artifactId>
+		    <version>1.5.0-b01</version>
+		</dependency>
 		<!-- 常用工具  end -->
 		
 		<!-- ftp服务  begin -->

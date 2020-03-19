@@ -12,7 +12,6 @@ var FtpLogManage = {
 FtpLogManage.initColumn = function () {
     return [
             {title: '工号', field: 'userid', visible: true, align: 'center', valign: 'middle'},
-            {title: '用户名', field: 'username', visible: true, align: 'center', valign: 'middle'},
             {title: 'ip', field: 'ip', visible: true, align: 'center', valign: 'middle'},
             {title: '操作', field: 'operation', visible: true, align: 'center', valign: 'middle'},
             {title: '文件路径', field: 'filepath', visible: true, align: 'center', valign: 'middle'},

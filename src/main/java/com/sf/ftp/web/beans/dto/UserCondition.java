@@ -1,5 +1,6 @@
 package com.sf.ftp.web.beans.dto;
 
+import com.sf.ftp.common.UserType;
 
 /**
  * 用户列表查询条件
@@ -12,6 +13,11 @@ public class UserCondition extends PageCondition{
 	 * 用户名
 	 */
     private String userid;
+    
+    /**
+     * 账号类型
+     */
+    private UserType usertype;
     
     /**
      * 启用
@@ -58,6 +64,14 @@ public class UserCondition extends PageCondition{
 
 	public void setEnableflag(Boolean enableflag) {
 		this.enableflag = enableflag;
+	}
+
+	public UserType getUsertype() {
+		return usertype;
+	}
+
+	public void setUsertype(UserType usertype) {
+		this.usertype = usertype;
 	}
 
 	

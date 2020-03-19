@@ -32,15 +32,13 @@ public class SfFtpRecordDao implements FtpRecordDao {
 
 	private FtpStatistics historyStatistics;
 
-	private String insertRecordStmt = "INSERT INTO ftp_access_log(userid,username, ip, operation, filepath, access_time) VALUES ('{userid}','{username}', '{ip}', '{operation}', '{filepath}', '{access_time}')";
+	private String insertRecordStmt = "INSERT INTO ftp_access_log(userid, ip, operation, filepath, access_time) VALUES ('{userid}', '{ip}', '{operation}', '{filepath}', '{access_time}')";
 
 	private String updateUserLoginStmt = "update ftp_user set current_login_number = '{current_login_number}' where userid = '{userid}' ";
 	
 	private String resetUserLoginStmt = "update ftp_user set current_login_number = '0' ";
 
-	private String disabledUserByDateStmt = "update ftp_user set enableflag = '0' where ISNULL(expires)=0 and LENGTH(trim(expires))>0 and expires < '{expires}'";
-
-	private String deleteUserByDateStmt = "DELETE FROM ftp_user WHERE ISNULL(expires)=0 and LENGTH(trim(expires))>0 and expires < '{expires}'";
+	private String disabledUserByDateStmt = "update ftp_user set enableflag = '0',handler = 'system' where ISNULL(expires)=0 and LENGTH(trim(expires))>0 and expires < '{expires}'";
 
 	private String loadHistoryStatisticsStmt = "select startTime,totalUploadNumber,totalDownloadNumber,totalDeleteNumber,totalUploadSize,totalDownloadSize,totalDirectoryCreated,totalDirectoryRemoved,totalConnectionNumber,currentConnectionNumber,totalLoginNumber,totalFailedLoginNumber,currentLoginNumber,totalAnonymousLoginNumber,currentAnonymousLoginNumber from ftp_statistics";
 
@@ -120,18 +118,6 @@ public class SfFtpRecordDao implements FtpRecordDao {
 		}
 	}
 
-	@Override
-	public void deleteUserByDate(String expiresDate) {
-		try (Connection connection = createConnection(); Statement stmt = connection.createStatement();) {
-			Map<String, Object> map = Maps.newHashMap();
-			map.put("expires", expiresDate);
-			String sql = StringUtils.replaceString(deleteUserByDateStmt, map);
-			stmt.executeUpdate(sql);
-		} catch (Exception e) {
-			logger.error("deleteUserByDate ", e);
-		}
-
-	}
 	
 	private FtpStatistics loadHistoryStatistics() {
 		try (Connection connection = createConnection();

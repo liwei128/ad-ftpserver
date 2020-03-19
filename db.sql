@@ -20,6 +20,7 @@ CREATE TABLE `ftp_user`  (
   PRIMARY KEY (`userid`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
+INSERT INTO `ftp_user` VALUES ('admin', 'USER', '123456', 'xxx@xxx.com', '/', 1, 300, '上传,下载,删除,修改', 1, 0, 0, 0, 0, 0, '', 'system', '2020-03-09 09:20:38');
 
 DROP TABLE IF EXISTS `ftp_statistics`;
 CREATE TABLE `ftp_statistics`  (
